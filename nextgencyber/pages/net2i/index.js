@@ -7,7 +7,15 @@ export default function Net2I() {
       <Head>
         <title>TrafficLens — NeT2I · NextGenCyber</title>
         <meta name="description" content="Convert network traffic CSV to CNN-ready images, or decode images back to CSV." />
+        <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
       </Head>
+
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3806712449234414"
+        crossOrigin="anonymous"
+        strategy="afterInteractive"
+      />
 
       <Script
         type="module"
