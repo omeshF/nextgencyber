@@ -1,10 +1,13 @@
 {
-  "rewrites": [
+  "redirects": [
     {
       "source": "/(.*)",
       "has": [{ "type": "host", "value": "net2i.nextgencyber.co.uk" }],
-      "destination": "/net2i/$1"
-    },
+      "destination": "https://nextgencyber.co.uk/net2i",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
     {
       "source": "/(.*)",
       "destination": "/$1"
