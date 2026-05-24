@@ -2,6 +2,11 @@
   "rewrites": [
     {
       "source": "/(.*)",
+      "has": [{ "type": "host", "value": "net2i.nextgencyber.co.uk" }],
+      "destination": "/net2i/$1"
+    },
+    {
+      "source": "/(.*)",
       "destination": "/$1"
     }
   ]
