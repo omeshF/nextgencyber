@@ -1,14 +1,14 @@
 import Head from 'next/head'
+import Script from 'next/script'
 
 const projects = [
   {
     name: "TrafficLens / NeT2I",
     description: "Convert network traffic CSV files into CNN-ready RGB images, or decode images back to CSV. Built for ML-based anomaly detection in 5G-MEC networks.",
-    url: "https://net2i.nextgencyber.co.uk",
+    url: "https://nextgencyber.co.uk/net2i",
     badge: "ML · Security · Research",
     icon: "🔁",
   },
-  // Add more projects here later
 ]
 
 export default function Home() {
@@ -17,7 +17,15 @@ export default function Home() {
       <Head>
         <title>NextGenCyber — Research Tools</title>
         <meta name="description" content="Cybersecurity and ML research tools by Omesh Fernando." />
+        <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
       </Head>
+
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3806712449234414"
+        crossOrigin="anonymous"
+        strategy="afterInteractive"
+      />
 
       <main style={styles.main}>
         <header style={styles.header}>
@@ -95,7 +103,6 @@ const styles = {
     padding: "28px",
     textDecoration: "none",
     color: "#f0f0f0",
-    transition: "border-color 0.2s, transform 0.2s",
     display: "flex",
     flexDirection: "column",
     gap: "10px",
