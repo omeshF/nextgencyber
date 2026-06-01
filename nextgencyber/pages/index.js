@@ -14,9 +14,9 @@ const projects = [
   },
   {
     name: "LearningPark",
-    description: "An interactive learning platform for cybersecurity and machine learning concepts. Explore courses, guides and resources.",
+    description: "An interactive learning platform for Educators to imporve learner engagement using various gamified learning tools.",
     url: "https://learningpark.nextgencyber.co.uk",
-    badge: "Education · Gamified Learning · AI-Assistant",
+    badge: "Education · Gamified Learning · AI",
     emoji: null,
     icon: "/favicon.svg",
     accent: "#ffe599",
