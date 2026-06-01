@@ -90,24 +90,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section style={styles.aboutBox}>
-            <h2 style={styles.aboutTitle}>About NextGenCyber</h2>
-            <p style={styles.aboutText}>
-              NextGenCyber is a collection of open-source research tools for cybersecurity, education, and AI 
-              developed by{" "}
-              <a href="https://github.com/omeshF" style={styles.link}>Omesh Fernando</a>.
-              Tools are published on{" "}
-              <a href="https://pypi.org/user/omeshf91/" style={styles.link}>PyPI</a> and
-              peer-reviewed research is available via{" "}
-              <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.link}>
-                IEEE Xplore
-              </a>.
-            </p>
-            <div style={styles.aboutLinks}>
-              <Link href="/about" style={styles.aboutCta}>Learn more →</Link>
-              <Link href="/contact" style={styles.aboutCta}>Get in touch →</Link>
-            </div>
-          </section>
+        
         </main>
 
         <footer style={styles.footer}>

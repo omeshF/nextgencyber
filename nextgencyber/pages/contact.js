@@ -57,30 +57,14 @@ export default function Contact() {
                 <span style={styles.contactLink}>GitHub Discussions →</span>
               </a>
 
-              <a href="mailto:omeshf@gmail.com" style={styles.contactCard}>
-                <span style={styles.contactIcon}>📧</span>
-                <h2 style={styles.contactTitle}>Research & Collaboration</h2>
-                <p style={styles.contactDesc}>
-                  Interested in research collaboration, citing the work, or academic enquiries?
-                  Get in touch by email.
-                </p>
-                <span style={styles.contactLink}>omeshf@gmail.com →</span>
-              </a>
+          
 
-              <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.contactCard}>
-                <span style={styles.contactIcon}>📄</span>
-                <h2 style={styles.contactTitle}>IEEE Paper</h2>
-                <p style={styles.contactDesc}>
-                  Read the original peer-reviewed research behind the NeT2I algorithms on IEEE Xplore.
-                </p>
-                <span style={styles.contactLink}>View on IEEE Xplore →</span>
-              </a>
-            </div>
+        
 
             <div style={styles.noteBox}>
               <p style={styles.noteText}>
                 ⏱️ <strong>Response times:</strong> GitHub issues are monitored regularly.
-                Email responses may take 2–5 business days.
+               
               </p>
             </div>
           </div>

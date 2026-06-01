@@ -7,7 +7,7 @@ export default function About() {
     <>
       <Head>
         <title>About — NextGenCyber</title>
-        <meta name="description" content="About NextGenCyber — open-source cybersecurity and ML research tools by Omesh Fernando, IEEE published researcher." />
+        <meta name="description" content="About NextGenCyber — open-source cybersecurity and ML research tools by Dr Omesh Fernando and Dr Sajid Fadlelseed, IEEE published researchers at the University of Hertfordshire." />
         <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -35,34 +35,27 @@ export default function About() {
             <h1 style={styles.title}>About NextGenCyber</h1>
             <div style={styles.divider} />
 
+            {/* What is NextGenCyber */}
             <section style={styles.section}>
               <h2 style={styles.sectionTitle}>🔬 What is NextGenCyber?</h2>
               <p style={styles.text}>
                 NextGenCyber is an open-source platform hosting cybersecurity and machine learning
-                research tools. The goal is to make cutting-edge research accessible — turning
-                academic work into practical, usable software that researchers, engineers, and
-                students can build on.
+                research tools, along with various educational tools — including{" "}
+                <a href="https://learningpark.nextgencyber.co.uk" style={styles.link}>LearningPark</a>,
+                a gamified learning platform designed to increase learner engagement and interactivity
+                through innovative educational tools.
+              </p>
+              <p style={styles.text}>
+                The goal is to make cutting-edge research accessible — turning academic work into
+                practical, usable software that researchers, engineers, educators, and students can
+                build on.
               </p>
             </section>
 
-            <section style={styles.section}>
-              <h2 style={styles.sectionTitle}>👨‍💻 About the Author</h2>
-              <p style={styles.text}>
-                NextGenCyber is developed and maintained by <strong>Omesh Fernando</strong>,
-                a cybersecurity researcher with a focus on machine learning applications in
-                network security, particularly in 5G and Mobile Edge Computing (MEC) environments.
-              </p>
-              <p style={styles.text}>
-                Omesh's research has been published at the{" "}
-                <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.link}>
-                  IEEE Wireless Communications and Networking Conference (WCNC) 2023
-                </a>
-                , where the foundational algorithms behind the NeT2I tool were first presented.
-              </p>
-            </section>
-
+            {/* Current Tools */}
             <section style={styles.section}>
               <h2 style={styles.sectionTitle}>🛠️ Current Tools</h2>
+
               <div style={styles.toolCard}>
                 <div style={styles.toolHeader}>
                   <span style={styles.toolIcon}>🔁</span>
@@ -80,22 +73,88 @@ export default function About() {
                   <Link href="/net2i" style={styles.pillGreen}>Try it →</Link>
                 </div>
               </div>
+
+              <div style={{ ...styles.toolCard, marginTop: "20px" }}>
+                <div style={styles.toolHeader}>
+                  <span style={styles.toolIcon}>🎓</span>
+                  <h3 style={styles.toolName}>LearningPark</h3>
+                </div>
+                <p style={styles.text}>
+                  An interactive learning platform for educators to improve learner engagement
+                  using various gamified learning tools. Designed to make teaching more dynamic,
+                  measurable, and enjoyable for both educators and students.
+                </p>
+                <div style={styles.toolLinks}>
+                  <a href="https://learningpark.nextgencyber.co.uk" style={styles.pillGreen}>Visit LearningPark →</a>
+                </div>
+              </div>
             </section>
 
+            {/* Authors */}
             <section style={styles.section}>
-              <h2 style={styles.sectionTitle}>📚 Citation</h2>
-              <p style={styles.text}>If you use these tools in your research, please cite:</p>
-              <pre style={styles.codeBlock}>{`@inproceedings{fernando2023new,
-  title={New algorithms for the detection of malicious 
-         traffic in 5g-mec},
-  author={Fernando, Omesh A and Xiao, Hannan 
-          and Spring, Joseph},
-  booktitle={2023 IEEE Wireless Communications 
-             and Networking Conference (WCNC)},
-  pages={1--6},
-  year={2023},
-  organization={IEEE}
-}`}</pre>
+              <h2 style={styles.sectionTitle}>👨‍💻 The Team</h2>
+
+              {/* Omesh */}
+              <div style={styles.authorCard}>
+                <div style={styles.authorTop}>
+                  <div style={styles.authorAvatar}>OF</div>
+                  <div>
+                    <h3 style={styles.authorName}>Dr Omesh Anthony Fernando</h3>
+                    <p style={styles.authorRole}>Cybersecurity Researcher & Educator · University of Hertfordshire</p>
+                  </div>
+                </div>
+                <p style={styles.text}>
+                  Dr Omesh Anthony Fernando is a Cybersecurity and Networking Researcher and Lecturer
+                  at the University of Hertfordshire, teaching across Cybersecurity, Networking, and
+                  Data Science. He completed his BSc (Hons) in Applied Computing with Networks at
+                  Sheffield Hallam University (2015), his MSc in Computer Networks Practice and
+                  Principles at the University of Hertfordshire (2018), and his PhD in Computer
+                  Science at the University of Hertfordshire (2023).
+                </p>
+                <p style={styles.text}>
+                  He has presented at leading international conferences including IEEE WCNC, MDPI,
+                  and EAI CollaborateCom, and is actively involved in developing testbeds and
+                  algorithms for securing future network infrastructures. His research interests span
+                  5G, B5G, 6G, Software-Defined Networking (SDN), Data Plane Programming,
+                  Multi-Access Edge Computing (MEC), and Deep Learning (DL), with a focus on enabling
+                  secure and intelligent future telecommunications infrastructures.
+                </p>
+                <div style={styles.toolLinks}>
+                  <a href="https://scholar.google.co.uk/citations?user=KEuh_MkAAAAJ&hl=en&oi=ao" style={styles.pill}>
+                    Google Scholar
+                  </a>
+                  <a href="https://github.com/omeshF" style={styles.pill}>GitHub</a>
+                  <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.pill}>IEEE Publication</a>
+                </div>
+              </div>
+
+              {/* Sajid */}
+              <div style={{ ...styles.authorCard, marginTop: "20px" }}>
+                <div style={styles.authorTop}>
+                  <div style={{ ...styles.authorAvatar, backgroundColor: "#b8d8f0" }}>SF</div>
+                  <div>
+                    <h3 style={styles.authorName}>Dr Sajid Fadlelseed</h3>
+                    <p style={styles.authorRole}>Computer Science Researcher & Educator · University of Hertfordshire</p>
+                  </div>
+                </div>
+                <p style={styles.text}>
+                  Dr Sajid Fadlelseed is a Computer Science Researcher and Lecturer at the University
+                  of Hertfordshire, where he teaches modules in Embedded Systems and Fault Tolerance
+                  Algorithms. He received both his MSc and PhD in Computer Science from the University
+                  of Hertfordshire, with his studies supported by the National University of Sudan (NUSU).
+                </p>
+                <p style={styles.text}>
+                  His research interests include mixed-criticality scheduling, real-time embedded systems,
+                  fault tolerance, Network-on-Chip (NoC) architectures, and optimisation techniques.
+                  He has conducted research on Dependable Real-Time (DRT) services and Software
+                  Integrity Levels (SIL).
+                </p>
+                <div style={styles.toolLinks}>
+                  <a href="https://scholar.google.co.uk/citations?user=IUiwG8gAAAAJ&hl=en&oi=ao" style={styles.pill}>
+                    Google Scholar
+                  </a>
+                </div>
+              </div>
             </section>
 
             <div style={styles.ctaRow}>
@@ -189,7 +248,7 @@ const styles = {
     fontSize: "1.2rem",
     fontWeight: "600",
     color: "#2a6080",
-    marginBottom: "12px",
+    marginBottom: "16px",
   },
   text: {
     fontSize: "0.95rem",
@@ -241,16 +300,42 @@ const styles = {
     textDecoration: "none",
     fontWeight: "600",
   },
-  codeBlock: {
-    backgroundColor: "#f4f0e8",
-    border: "1px solid #e0dac8",
-    borderRadius: "10px",
-    padding: "20px",
-    fontSize: "0.8rem",
-    lineHeight: "1.6",
-    overflowX: "auto",
-    color: "#3a3a2a",
-    fontFamily: "monospace",
+  authorCard: {
+    backgroundColor: "#ffffff",
+    border: "1px solid #e8e4d8",
+    borderRadius: "16px",
+    padding: "28px",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+  },
+  authorTop: {
+    display: "flex",
+    alignItems: "center",
+    gap: "16px",
+    marginBottom: "16px",
+  },
+  authorAvatar: {
+    width: "52px",
+    height: "52px",
+    borderRadius: "50%",
+    backgroundColor: "#b8e4c9",
+    color: "#3a7d5a",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontWeight: "700",
+    fontSize: "1rem",
+    flexShrink: 0,
+  },
+  authorName: {
+    fontSize: "1.1rem",
+    fontWeight: "700",
+    margin: "0 0 4px 0",
+    color: "#2d2d2d",
+  },
+  authorRole: {
+    fontSize: "0.82rem",
+    color: "#7a7a6a",
+    margin: 0,
   },
   ctaRow: {
     display: "flex",
@@ -300,5 +385,10 @@ const styles = {
     color: "#9a9a8a",
     fontSize: "0.82rem",
     margin: 0,
+  },
+  link: {
+    color: "#3a7d5a",
+    textDecoration: "none",
+    fontWeight: "500",
   },
 }
