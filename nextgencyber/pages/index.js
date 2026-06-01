@@ -31,8 +31,8 @@ export default function Home() {
         <meta name="description" content="Open-source cybersecurity and machine learning research tools by Omesh Fernando. Convert network traffic data to CNN-ready images for anomaly detection." />
         <meta name="keywords" content="cybersecurity, machine learning, network traffic, CNN, anomaly detection, net2i, i2net" />
         <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
-        <meta property="og:title" content="NextGenCyber — Cybersecurity & ML Research Tools" />
-        <meta property="og:description" content="Open-source tools for cybersecurity and ML research." />
+        <meta property="og:title" content="NextGenCyber — Cybersecurity, AI & Educational Tools" />
+        <meta property="og:description" content="Tools for Cybersecurity, AI & Educational Tools. " />
         <meta property="og:url" content="https://nextgencyber.co.uk" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -93,8 +93,8 @@ export default function Home() {
           <section style={styles.aboutBox}>
             <h2 style={styles.aboutTitle}>About NextGenCyber</h2>
             <p style={styles.aboutText}>
-              NextGenCyber is a collection of open-source research tools for cybersecurity
-              and machine learning, developed by{" "}
+              NextGenCyber is a collection of open-source research tools for cybersecurity, education, and AI 
+              developed by{" "}
               <a href="https://github.com/omeshF" style={styles.link}>Omesh Fernando</a>.
               Tools are published on{" "}
               <a href="https://pypi.org/user/omeshf91/" style={styles.link}>PyPI</a> and
