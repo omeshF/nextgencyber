@@ -23,11 +23,12 @@ export default function About() {
         <nav style={styles.nav}>
           <Link href="/" style={styles.navBrand}>🛡️ NextGenCyber</Link>
           <div style={styles.navLinks}>
-            <Link href="/" style={styles.navLink}>Home</Link>
-            <Link href="/net2i" style={styles.navLink}>TrafficLens</Link>
-            <Link href="/about" style={styles.navLinkActive}>About</Link>
-            <Link href="/contact" style={styles.navLink}>Contact</Link>
-          </div>
+  <Link href="/" style={styles.navLink}>Home</Link>
+  <Link href="/net2i" style={styles.navLink}>TrafficLens</Link>
+  <a href="https://learningpark.nextgencyber.co.uk" style={styles.navLink}>LearningPark</a>
+  <Link href="/about" style={styles.navLink}>About</Link>
+  <Link href="/contact" style={styles.navLink}>Contact</Link>
+</div>
         </nav>
 
         <main style={styles.main}>

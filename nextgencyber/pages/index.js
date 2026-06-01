@@ -50,9 +50,10 @@ export default function Home() {
           <div style={styles.navLinks}>
             <Link href="/" style={styles.navLink}>Home</Link>
             <Link href="/net2i" style={styles.navLink}>TrafficLens</Link>
+            <a href="https://learningpark.nextgencyber.co.uk" style={styles.navLink}>LearningPark</a>
             <Link href="/about" style={styles.navLink}>About</Link>
             <Link href="/contact" style={styles.navLink}>Contact</Link>
-          </div>
+</div>
         </nav>
 
         <main style={styles.main}>
