@@ -11,6 +11,14 @@ const projects = [
     icon: "🔁",
     accent: "#b8e4c9",
   },
+  {
+    name: "LearningPark",
+    description: "An interactive learning platform for cybersecurity and machine learning concepts. Explore courses, guides and resources.",
+    url: "https://learningpark.nextgencyber.co.uk",
+    badge: "Education · Cybersecurity · ML",
+    icon: "🎓",
+    accent: "#ffe599",
+  },
 ]
 
 export default function Home() {

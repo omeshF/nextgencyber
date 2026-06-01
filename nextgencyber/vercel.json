@@ -5,6 +5,12 @@
       "has": [{ "type": "host", "value": "net2i.nextgencyber.co.uk" }],
       "destination": "https://nextgencyber.co.uk/net2i",
       "permanent": false
+    },
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "learningpark.nextgencyber.co.uk" }],
+      "destination": "https://nextgencyber.co.uk/learningpark",
+      "permanent": false
     }
   ],
   "rewrites": [
