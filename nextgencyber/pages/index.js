@@ -8,7 +8,8 @@ const projects = [
     description: "Convert network traffic CSV files into CNN-ready RGB images, or decode images back to CSV. Built for ML-based anomaly detection in 5G-MEC networks.",
     url: "/net2i",
     badge: "ML · Security · Research",
-    icon: "🔁",
+    emoji: "🔁",
+    icon: null,
     accent: "#b8e4c9",
   },
   {
@@ -16,7 +17,8 @@ const projects = [
     description: "An interactive learning platform for cybersecurity and machine learning concepts. Explore courses, guides and resources.",
     url: "https://learningpark.nextgencyber.co.uk",
     badge: "Education · Cybersecurity · ML",
-    icon: "🎓",
+    emoji: null,
+    icon: "/favicon.svg",
     accent: "#ffe599",
   },
 ]
@@ -69,7 +71,10 @@ export default function Home() {
             {projects.map((p) => (
               <Link key={p.name} href={p.url} style={styles.card}>
                 <div style={{ ...styles.cardTop, backgroundColor: p.accent }}>
-                  <span style={styles.cardIcon}>{p.icon}</span>
+                  {p.icon
+                    ? <img src={p.icon} alt={p.name} style={styles.cardImage} />
+                    : <span style={styles.cardIcon}>{p.emoji}</span>
+                  }
                 </div>
                 <div style={styles.cardBody}>
                   <h2 style={styles.cardTitle}>{p.name}</h2>
@@ -146,10 +151,7 @@ const styles = {
     color: "#3a7d5a",
     textDecoration: "none",
   },
-  navLinks: {
-    display: "flex",
-    gap: "28px",
-  },
+  navLinks: { display: "flex", gap: "28px" },
   navLink: {
     color: "#4a4a3a",
     textDecoration: "none",
@@ -222,6 +224,12 @@ const styles = {
     justifyContent: "center",
   },
   cardIcon: { fontSize: "2.5rem" },
+  cardImage: {
+    width: "52px",
+    height: "52px",
+    objectFit: "contain",
+    borderRadius: "10px",
+  },
   cardBody: {
     padding: "20px 24px 24px",
     display: "flex",
@@ -322,5 +330,10 @@ const styles = {
     color: "#9a9a8a",
     fontSize: "0.82rem",
     margin: 0,
+  },
+  link: {
+    color: "#3a7d5a",
+    textDecoration: "none",
+    fontWeight: "500",
   },
 }
