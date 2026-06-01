@@ -56,6 +56,7 @@ export default function About() {
             <section style={styles.section}>
               <h2 style={styles.sectionTitle}>🛠️ Current Tools</h2>
 
+              {/* TrafficLens */}
               <div style={styles.toolCard}>
                 <div style={styles.toolHeader}>
                   <span style={styles.toolIcon}>🔁</span>
@@ -74,9 +75,10 @@ export default function About() {
                 </div>
               </div>
 
+              {/* LearningPark */}
               <div style={{ ...styles.toolCard, marginTop: "20px" }}>
                 <div style={styles.toolHeader}>
-                  <span style={styles.toolIcon}>"/favicon.svg"</span>
+                  <img src="/favicon.svg" alt="LearningPark" style={styles.toolImage} />
                   <h3 style={styles.toolName}>LearningPark</h3>
                 </div>
                 <p style={styles.text}>
@@ -100,7 +102,7 @@ export default function About() {
                   <div style={styles.authorAvatar}>OF</div>
                   <div>
                     <h3 style={styles.authorName}>Dr Omesh Anthony Fernando</h3>
-                    <p style={styles.authorRole}>Cybersecurity Researcher & Educator  </p>
+                    <p style={styles.authorRole}>Cybersecurity Researcher & Educator · University of Hertfordshire</p>
                   </div>
                 </div>
                 <p style={styles.text}>
@@ -133,7 +135,7 @@ export default function About() {
                   <div style={{ ...styles.authorAvatar, backgroundColor: "#b8d8f0" }}>SF</div>
                   <div>
                     <h3 style={styles.authorName}>Dr Sajid Fadlelseed</h3>
-                    <p style={styles.authorRole}>Computer Science Researcher & Educator </p>
+                    <p style={styles.authorRole}>Computer Science Researcher & Educator · University of Hertfordshire</p>
                   </div>
                 </div>
                 <p style={styles.text}>
@@ -269,6 +271,12 @@ const styles = {
     marginBottom: "12px",
   },
   toolIcon: { fontSize: "1.8rem" },
+  toolImage: {
+    width: "40px",
+    height: "40px",
+    objectFit: "contain",
+    borderRadius: "8px",
+  },
   toolName: {
     fontSize: "1.1rem",
     fontWeight: "600",
