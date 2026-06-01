@@ -62,7 +62,7 @@ export default function Home() {
               <h1 style={styles.title}>NextGenCyber</h1>
             </div>
             <p style={styles.subtitle}>
-              Cybersecurity &amp; Machine Learning Research Tools
+              Cybersecurity, Machine Learning &amp; Educational Tools
             </p>
             <div style={styles.divider} />
           </header>
