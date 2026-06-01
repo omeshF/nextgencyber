@@ -76,7 +76,7 @@ export default function About() {
 
               <div style={{ ...styles.toolCard, marginTop: "20px" }}>
                 <div style={styles.toolHeader}>
-                  <span style={styles.toolIcon}>🎓</span>
+                  <span style={styles.toolIcon}>"/favicon.svg"</span>
                   <h3 style={styles.toolName}>LearningPark</h3>
                 </div>
                 <p style={styles.text}>
@@ -100,7 +100,7 @@ export default function About() {
                   <div style={styles.authorAvatar}>OF</div>
                   <div>
                     <h3 style={styles.authorName}>Dr Omesh Anthony Fernando</h3>
-                    <p style={styles.authorRole}>Cybersecurity Researcher & Educator · University of Hertfordshire</p>
+                    <p style={styles.authorRole}>Cybersecurity Researcher & Educator  </p>
                   </div>
                 </div>
                 <p style={styles.text}>
@@ -124,7 +124,6 @@ export default function About() {
                     Google Scholar
                   </a>
                   <a href="https://github.com/omeshF" style={styles.pill}>GitHub</a>
-                  <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.pill}>IEEE Publication</a>
                 </div>
               </div>
 
@@ -134,7 +133,7 @@ export default function About() {
                   <div style={{ ...styles.authorAvatar, backgroundColor: "#b8d8f0" }}>SF</div>
                   <div>
                     <h3 style={styles.authorName}>Dr Sajid Fadlelseed</h3>
-                    <p style={styles.authorRole}>Computer Science Researcher & Educator · University of Hertfordshire</p>
+                    <p style={styles.authorRole}>Computer Science Researcher & Educator </p>
                   </div>
                 </div>
                 <p style={styles.text}>

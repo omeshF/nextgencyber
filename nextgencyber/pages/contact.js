@@ -57,21 +57,20 @@ export default function Contact() {
                 <span style={styles.contactLink}>GitHub Discussions →</span>
               </a>
 
-              <a href="mailto:omeshf@gmail.com" style={styles.contactCard}>
-                <span style={styles.contactIcon}>📧</span>
-                <h2 style={styles.contactTitle}>Research & Collaboration</h2>
-                <p style={styles.contactDesc}>
-                  Interested in research collaboration, citing the work, or academic enquiries?
-                  Get in touch by email.
-                </p>
-                <span style={styles.contactLink}>omeshf@gmail.com →</span>
-              </a>
-
               <a href="https://scholar.google.co.uk/citations?user=KEuh_MkAAAAJ&hl=en&oi=ao" style={styles.contactCard}>
                 <span style={styles.contactIcon}>📄</span>
                 <h2 style={styles.contactTitle}>Google Scholar</h2>
                 <p style={styles.contactDesc}>
                   View published research papers and citations by Dr Omesh Fernando on Google Scholar.
+                </p>
+                <span style={styles.contactLink}>View Profile →</span>
+              </a>
+
+              <a href="https://scholar.google.co.uk/citations?user=IUiwG8gAAAAJ&hl=en&oi=ao" style={styles.contactCard}>
+                <span style={styles.contactIcon}>📄</span>
+                <h2 style={styles.contactTitle}>Google Scholar</h2>
+                <p style={styles.contactDesc}>
+                  View published research papers and citations by Dr Sajid Fadlelseed on Google Scholar.
                 </p>
                 <span style={styles.contactLink}>View Profile →</span>
               </a>
