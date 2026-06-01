@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>NextGenCyber — Cybersecurity & ML Research Tools</title>
+        <title>NextGenCyber — Cybersecurity, AI & Educational Tools</title>
         <meta name="description" content="Open-source cybersecurity and machine learning research tools by Omesh Fernando. Convert network traffic data to CNN-ready images for anomaly detection." />
         <meta name="keywords" content="cybersecurity, machine learning, network traffic, CNN, anomaly detection, net2i, i2net" />
         <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
