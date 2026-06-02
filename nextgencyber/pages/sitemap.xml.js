@@ -10,12 +10,6 @@ function generateSiteMap() {
         <priority>1.0</priority>
       </url>
       <url>
-        <loc>${SITE_URL}/net2i</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.9</priority>
-      </url>
-      <url>
         <loc>${SITE_URL}/about</loc>
         <lastmod>${new Date().toISOString()}</lastmod>
         <changefreq>monthly</changefreq>
