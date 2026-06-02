@@ -1,0 +1,20 @@
+name: Keep HuggingFace Space Alive
+
+on:
+  schedule:
+    - cron: '0 */12 * * *'  # runs every 12 hours
+  workflow_dispatch:          # allows manual trigger from GitHub Actions tab
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping TrafficLens Space
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://omeshf91-trafficlens.hf.space)
+          echo "Response code: $response"
+          if [ $response -eq 200 ]; then
+            echo "✅ Space is alive"
+          else
+            echo "⚠️ Space returned $response"
+          fi
