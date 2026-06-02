@@ -51,6 +51,8 @@ export default function Home() {
               {" & "}
               <a href="https://pypi.org/project/i2net/" style={styles.link}>i2net</a>
               {" · "}
+              <a href="https://www.mdpi.com/2673-8732/5/4/42" style={styles.link}>MDPI Network 2025</a>
+              {" · "}
               <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.link}>IEEE WCNC 2023</a>
             </p>
           </header>
@@ -69,10 +71,23 @@ export default function Home() {
               Networks (CNNs) for intrusion detection and anomaly classification.
             </p>
             <p style={styles.infoText}>
-              This approach has been validated in 5G and Mobile Edge Computing (MEC) environments and
-              published at the IEEE Wireless Communications and Networking Conference (WCNC) 2023.
-              The bidirectional design means encoded data can be fully reconstructed back to CSV format,
-              making it suitable for research pipelines requiring lossless round-trips.
+              This approach introduces CiNeT, a novel deep learning-based Intrusion Detection System
+              employing a bijective encoding–decoding framework between network traffic features and
+              their RGB representations. The pipeline provides a lossless, deterministic method for
+              encoding and decoding both IPv4 and IPv6 network data, validated in 5G and Mobile Edge
+              Computing (MEC) environments. The bidirectional design means encoded data can be fully
+              reconstructed back to CSV format, making it suitable for research pipelines requiring
+              lossless round-trips.
+            </p>
+            <p style={styles.infoText}>
+              Published in{" "}
+              <a href="https://www.mdpi.com/2673-8732/5/4/42" style={styles.link}>
+                MDPI Network (2025)
+              </a>
+              {" "}and presented at the{" "}
+              <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.link}>
+                IEEE Wireless Communications and Networking Conference (WCNC) 2023
+              </a>.
             </p>
           </section>
 
@@ -137,16 +152,34 @@ export default function Home() {
           <section style={styles.citationSection}>
             <h2 style={styles.infoHeading}>Citation</h2>
             <p style={styles.infoText}>If you use TrafficLens or the NeT2I algorithms in your research, please cite:</p>
+
+            <p style={styles.infoText}><strong>Primary paper (MDPI Network 2025):</strong></p>
+            <pre style={styles.codeBlock}>{`@article{fernando2025bijective,
+  title={Bijective Network-to-Image Encoding for Interpretable
+         CNN-Based Intrusion Detection System},
+  author={Fernando, Omesh A and Spring, Joseph and Xiao, Hannan},
+  journal={Network},
+  volume={5},
+  number={4},
+  pages={42},
+  year={2025},
+  publisher={MDPI}
+}`}</pre>
+
+            <p style={styles.infoText}><strong>Conference paper (IEEE WCNC 2023):</strong></p>
             <pre style={styles.codeBlock}>{`@inproceedings{fernando2023new,
   title={New algorithms for the detection of malicious traffic in 5g-mec},
   author={Fernando, Omesh A and Xiao, Hannan and Spring, Joseph},
-  booktitle={2023 IEEE Wireless Communications and Networking Conference (WCNC)},
+  booktitle={2023 IEEE Wireless Communications and Networking
+             Conference (WCNC)},
   pages={1--6},
   year={2023},
   organization={IEEE}
 }`}</pre>
+
             <div style={styles.citationLinks}>
-              <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.pill}>View on IEEE Xplore</a>
+              <a href="https://www.mdpi.com/2673-8732/5/4/42" style={styles.pill}>MDPI Network 2025</a>
+              <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.pill}>IEEE WCNC 2023</a>
               <a href="https://pypi.org/project/net2i/" style={styles.pill}>net2i on PyPI</a>
               <a href="https://pypi.org/project/i2net/" style={styles.pill}>i2net on PyPI</a>
               <a href="https://github.com/omeshF/NeT2I" style={styles.pill}>GitHub</a>
@@ -283,7 +316,11 @@ const styles = {
     padding: "22px",
     boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
   },
-  featureIcon: { fontSize: "1.8rem", display: "block", marginBottom: "10px" },
+  featureIcon: {
+    fontSize: "1.8rem",
+    display: "block",
+    marginBottom: "10px",
+  },
   featureTitle: {
     fontSize: "1rem",
     fontWeight: "600",
