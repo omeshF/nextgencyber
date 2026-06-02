@@ -14,6 +14,7 @@ export default function Home() {
         <meta property="og:description" content="Convert network traffic CSV to CNN-ready images for ML-based anomaly detection." />
         <meta property="og:url" content="https://www.nextgencyber.co.uk" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/trafficlens.jpg" />
       </Head>
 
       <Script
@@ -42,7 +43,10 @@ export default function Home() {
 
         <main style={styles.main}>
           <header style={styles.header}>
-            <h1 style={styles.title}>🔁 TrafficLens</h1>
+            <h1 style={styles.title}>
+              <img src="/trafficlens.jpg" alt="TrafficLens" style={styles.titleLogo} />
+              TrafficLens
+            </h1>
             <div style={styles.divider} />
             <p style={styles.subtitle}>
               Convert network traffic CSV files into CNN-ready RGB images for anomaly detection,
@@ -132,26 +136,36 @@ export default function Home() {
             <div style={styles.stepsRow}>
               <div style={styles.step}>
                 <div style={styles.stepNumber}>1</div>
-                <p style={styles.stepText}>Select the <strong>CSV → Images</strong> tab and upload your network traffic CSV file.</p>
+                <p style={styles.stepText}>
+                  Select the <strong>CSV → Images</strong> tab and upload your network traffic CSV file.
+                </p>
               </div>
               <div style={styles.step}>
                 <div style={styles.stepNumber}>2</div>
-                <p style={styles.stepText}>Click <strong>Convert to Images</strong> and wait for processing to complete.</p>
+                <p style={styles.stepText}>
+                  Click <strong>Convert to Images</strong> and wait for processing to complete.
+                </p>
               </div>
               <div style={styles.step}>
                 <div style={styles.stepNumber}>3</div>
-                <p style={styles.stepText}>Download the ZIP file containing your encoded PNG images and metadata JSON files.</p>
+                <p style={styles.stepText}>
+                  Download the ZIP file containing your encoded PNG images and metadata JSON files.
+                </p>
               </div>
               <div style={styles.step}>
                 <div style={styles.stepNumber}>4</div>
-                <p style={styles.stepText}>Use the <strong>Images → CSV</strong> tab to decode images back to CSV at any time.</p>
+                <p style={styles.stepText}>
+                  Use the <strong>Images → CSV</strong> tab to decode images back to CSV at any time.
+                </p>
               </div>
             </div>
           </section>
 
           <section style={styles.citationSection}>
             <h2 style={styles.infoHeading}>Citation</h2>
-            <p style={styles.infoText}>If you use TrafficLens or the NeT2I algorithms in your research, please cite:</p>
+            <p style={styles.infoText}>
+              If you use TrafficLens or the NeT2I algorithms in your research, please cite:
+            </p>
 
             <p style={styles.infoText}><strong>Primary paper (MDPI Network 2025):</strong></p>
             <pre style={styles.codeBlock}>{`@article{fernando2025bijective,
@@ -196,7 +210,9 @@ export default function Home() {
             <a href="https://pypi.org/user/omeshf91/" style={styles.footerLink}>PyPI</a>
             <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.footerLink}>IEEE Paper</a>
           </div>
-          <p style={styles.footerText}>© {new Date().getFullYear()} Omesh Fernando · University of Hertfordshire · MIT License</p>
+          <p style={styles.footerText}>
+            © {new Date().getFullYear()} Omesh Fernando · University of Hertfordshire · MIT License
+          </p>
         </footer>
       </div>
     </>
@@ -262,6 +278,16 @@ const styles = {
     fontWeight: "700",
     color: "#3a7d5a",
     margin: "0 0 12px 0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "12px",
+  },
+  titleLogo: {
+    width: "48px",
+    height: "48px",
+    objectFit: "contain",
+    borderRadius: "10px",
   },
   divider: {
     height: "4px",
