@@ -14,7 +14,7 @@ export default function Home() {
         <meta property="og:description" content="Convert network traffic CSV to CNN-ready images for ML-based anomaly detection." />
         <meta property="og:url" content="https://www.nextgencyber.co.uk" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/trafficlens.jpg" />
+        <link rel="icon" href="/trafficlens.png" />
       </Head>
 
       <Script
@@ -44,7 +44,7 @@ export default function Home() {
         <main style={styles.main}>
           <header style={styles.header}>
             <h1 style={styles.title}>
-              <img src="/trafficlens.jpg" alt="TrafficLens" style={styles.titleLogo} />
+              <img src="/trafficlens.png" alt="TrafficLens" style={styles.titleLogo} />
               TrafficLens
             </h1>
             <div style={styles.divider} />
