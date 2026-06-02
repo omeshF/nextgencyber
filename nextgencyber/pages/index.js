@@ -103,7 +103,7 @@ export default function Home() {
               </p>
             </div>
             <div style={styles.featureCard}>
-              <span style={styles.featureIcon">🌐</span>
+              <span style={styles.featureIcon>🌐</span>
               <h3 style={styles.featureTitle}>IPv4 & IPv6</h3>
               <p style={styles.featureText}>
                 Full support for both IPv4 and IPv6 network traffic datasets, with automatic protocol
