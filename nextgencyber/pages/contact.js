@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
-  const [status, setStatus] = useState(null) // null | 'sending' | 'success' | 'error'
+  const [status, setStatus] = useState(null)
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value })
@@ -70,7 +70,6 @@ export default function Contact() {
               Have a question, found a bug, or want to collaborate? Here's how to reach us.
             </p>
 
-            {/* Contact cards */}
             <div style={styles.grid}>
               <a href="https://github.com/omeshF/NeT2I/issues" style={styles.contactCard}>
                 <span style={styles.contactIcon}>🐛</span>
@@ -110,15 +109,6 @@ export default function Contact() {
               </a>
             </div>
 
-              <a href="https://scholar.google.co.uk/citations?user=IUiwG8gAAAAJ&hl=en&oi=ao" style={styles.contactCard}>
-                <span style={styles.contactIcon}>📄</span>
-                <h2 style={styles.contactTitle}>Google Scholar</h2>
-                <p style={styles.contactDesc}>
-                  View published research papers and citations by Dr Sajid Fadlelseed on Google Scholar.
-                </p>
-                <span style={styles.contactLink}>View Profile →</span>
-              </a>
-            </div>
             <div style={styles.noteBox}>
               <p style={styles.noteText}>
                 ⏱️ <strong>Response times:</strong> GitHub issues are monitored regularly.
@@ -126,35 +116,33 @@ export default function Contact() {
               </p>
             </div>
 
-            {/* Contact form */}
             <div style={styles.formCard}>
               <h2 style={styles.formTitle}>📬 Send a Message</h2>
               <p style={styles.formSubtitle}>
                 Fill in the form below and your message will be forwarded directly to our inbox.
               </p>
 
-              <div style={styles.formRow}>
-                <div style={styles.formGroup}>
-                  <label style={styles.label}>Name *</label>
-                  <input
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder="Dr Omesh Fernando"
-                    style={styles.input}
-                  />
-                </div>
-                <div style={styles.formGroup}>
-                  <label style={styles.label}>Email *</label>
-                  <input
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="you@example.com"
-                    style={styles.input}
-                  />
-                </div>
+              <div style={styles.formGroup}>
+                <label style={styles.label}>Name *</label>
+                <input
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  placeholder="Your name"
+                  style={styles.input}
+                />
+              </div>
+
+              <div style={styles.formGroup}>
+                <label style={styles.label}>Email *</label>
+                <input
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  placeholder="you@example.com"
+                  style={styles.input}
+                />
               </div>
 
               <div style={styles.formGroup}>
@@ -187,7 +175,7 @@ export default function Contact() {
                 <p style={styles.errorMsg}>❌ Something went wrong. Please try again or email us directly.</p>
               )}
               {status === 'success' && (
-                <p style={styles.successMsg}>✅ Message sent! We'll get back to you within 2–5 business days.</p>
+                <p style={styles.successMsg}>✅ Message sent! We will get back to you within 2–5 business days.</p>
               )}
 
               <button
@@ -356,11 +344,6 @@ const styles = {
     margin: "0 0 24px 0",
     lineHeight: "1.6",
   },
-  formRow: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "16px",
-  },
   formGroup: {
     display: "flex",
     flexDirection: "column",
@@ -381,6 +364,8 @@ const styles = {
     color: "#2d2d2d",
     outline: "none",
     fontFamily: "'Segoe UI', system-ui, sans-serif",
+    width: "100%",
+    boxSizing: "border-box",
   },
   textarea: {
     padding: "10px 14px",
@@ -392,6 +377,8 @@ const styles = {
     outline: "none",
     resize: "vertical",
     fontFamily: "'Segoe UI', system-ui, sans-serif",
+    width: "100%",
+    boxSizing: "border-box",
   },
   button: {
     backgroundColor: "#3a7d5a",
