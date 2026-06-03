@@ -10,6 +10,7 @@ export default function About() {
         <meta name="description" content="About NextGenCyber — open-source cybersecurity and ML research tools by Dr Omesh Fernando and Dr Sajid Fadlelseed, IEEE published researchers at the University of Hertfordshire." />
         <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/trafficlens.jpg" />
       </Head>
 
       <Script
@@ -23,12 +24,11 @@ export default function About() {
         <nav style={styles.nav}>
           <Link href="/" style={styles.navBrand}>🛡️ NextGenCyber</Link>
           <div style={styles.navLinks}>
-  <Link href="/" style={styles.navLink}>Home</Link>
-  <Link href="/net2i" style={styles.navLink}>TrafficLens</Link>
-  <a href="https://learningpark.nextgencyber.co.uk" style={styles.navLink}>LearningPark</a>
-  <Link href="/about" style={styles.navLink}>About</Link>
-  <Link href="/contact" style={styles.navLink}>Contact</Link>
-</div>
+            <Link href="/" style={styles.navLink}>TrafficLens</Link>
+            <a href="https://learningpark.nextgencyber.co.uk" style={styles.navLink}>LearningPark</a>
+            <Link href="/about" style={styles.navLinkActive}>About</Link>
+            <Link href="/contact" style={styles.navLink}>Contact</Link>
+          </div>
         </nav>
 
         <main style={styles.main}>
@@ -60,7 +60,7 @@ export default function About() {
               {/* TrafficLens */}
               <div style={styles.toolCard}>
                 <div style={styles.toolHeader}>
-                  <span style={styles.toolIcon}>🔁</span>
+                  <img src="/trafficlens.png" alt="TrafficLens" style={styles.toolImage} />
                   <h3 style={styles.toolName}>TrafficLens (NeT2I / I2NeT)</h3>
                 </div>
                 <p style={styles.text}>
@@ -72,7 +72,9 @@ export default function About() {
                   <a href="https://pypi.org/project/net2i/" style={styles.pill}>net2i on PyPI</a>
                   <a href="https://pypi.org/project/i2net/" style={styles.pill}>i2net on PyPI</a>
                   <a href="https://github.com/omeshF/NeT2I" style={styles.pill}>GitHub</a>
-                  <Link href="/net2i" style={styles.pillGreen}>Try it →</Link>
+                  <a href="https://www.mdpi.com/2673-8732/5/4/42" style={styles.pill}>MDPI 2025</a>
+                  <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.pill}>IEEE WCNC 2023</a>
+                  <Link href="/" style={styles.pillGreen}>Try it →</Link>
                 </div>
               </div>
 
@@ -271,7 +273,6 @@ const styles = {
     gap: "12px",
     marginBottom: "12px",
   },
-  toolIcon: { fontSize: "1.8rem" },
   toolImage: {
     width: "40px",
     height: "40px",
