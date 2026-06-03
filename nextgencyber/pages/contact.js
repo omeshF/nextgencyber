@@ -1,8 +1,39 @@
 import Head from 'next/head'
 import Script from 'next/script'
 import Link from 'next/link'
+import { useState } from 'react'
 
 export default function Contact() {
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [status, setStatus] = useState(null) // null | 'sending' | 'success' | 'error'
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.email || !form.message) {
+      setStatus('missing')
+      return
+    }
+    setStatus('sending')
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+      if (res.ok) {
+        setStatus('success')
+        setForm({ name: '', email: '', subject: '', message: '' })
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
+  }
+
   return (
     <>
       <Head>
@@ -10,6 +41,7 @@ export default function Contact() {
         <meta name="description" content="Get in touch with NextGenCyber — report issues, ask questions, or collaborate on cybersecurity and ML research." />
         <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/trafficlens.jpg" />
       </Head>
 
       <Script
@@ -23,12 +55,11 @@ export default function Contact() {
         <nav style={styles.nav}>
           <Link href="/" style={styles.navBrand}>🛡️ NextGenCyber</Link>
           <div style={styles.navLinks}>
-  <Link href="/" style={styles.navLink}>Home</Link>
-  <Link href="/net2i" style={styles.navLink}>TrafficLens</Link>
-  <a href="https://learningpark.nextgencyber.co.uk" style={styles.navLink}>LearningPark</a>
-  <Link href="/about" style={styles.navLink}>About</Link>
-  <Link href="/contact" style={styles.navLink}>Contact</Link>
-</div>
+            <Link href="/" style={styles.navLink}>TrafficLens</Link>
+            <a href="https://learningpark.nextgencyber.co.uk" style={styles.navLink}>LearningPark</a>
+            <Link href="/about" style={styles.navLink}>About</Link>
+            <Link href="/contact" style={styles.navLinkActive}>Contact</Link>
+          </div>
         </nav>
 
         <main style={styles.main}>
@@ -39,6 +70,7 @@ export default function Contact() {
               Have a question, found a bug, or want to collaborate? Here's how to reach us.
             </p>
 
+            {/* Contact cards */}
             <div style={styles.grid}>
               <a href="https://github.com/omeshF/NeT2I/issues" style={styles.contactCard}>
                 <span style={styles.contactIcon}>🐛</span>
@@ -58,6 +90,16 @@ export default function Contact() {
                 <span style={styles.contactLink}>GitHub Discussions →</span>
               </a>
 
+              <a href="mailto:customer.support@nextgencyber.co.uk" style={styles.contactCard}>
+                <span style={styles.contactIcon}>📧</span>
+                <h2 style={styles.contactTitle}>Research & Collaboration</h2>
+                <p style={styles.contactDesc}>
+                  Interested in research collaboration, citing the work, or academic enquiries?
+                  Get in touch by email.
+                </p>
+                <span style={styles.contactLink}>customer.support@nextgencyber.co.uk →</span>
+              </a>
+
               <a href="https://scholar.google.co.uk/citations?user=KEuh_MkAAAAJ&hl=en&oi=ao" style={styles.contactCard}>
                 <span style={styles.contactIcon}>📄</span>
                 <h2 style={styles.contactTitle}>Google Scholar</h2>
@@ -66,6 +108,7 @@ export default function Contact() {
                 </p>
                 <span style={styles.contactLink}>View Profile →</span>
               </a>
+            </div>
 
               <a href="https://scholar.google.co.uk/citations?user=IUiwG8gAAAAJ&hl=en&oi=ao" style={styles.contactCard}>
                 <span style={styles.contactIcon}>📄</span>
@@ -76,12 +119,84 @@ export default function Contact() {
                 <span style={styles.contactLink}>View Profile →</span>
               </a>
             </div>
-
             <div style={styles.noteBox}>
               <p style={styles.noteText}>
                 ⏱️ <strong>Response times:</strong> GitHub issues are monitored regularly.
                 Email responses may take 2–5 business days.
               </p>
+            </div>
+
+            {/* Contact form */}
+            <div style={styles.formCard}>
+              <h2 style={styles.formTitle}>📬 Send a Message</h2>
+              <p style={styles.formSubtitle}>
+                Fill in the form below and your message will be forwarded directly to our inbox.
+              </p>
+
+              <div style={styles.formRow}>
+                <div style={styles.formGroup}>
+                  <label style={styles.label}>Name *</label>
+                  <input
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    placeholder="Dr Omesh Fernando"
+                    style={styles.input}
+                  />
+                </div>
+                <div style={styles.formGroup}>
+                  <label style={styles.label}>Email *</label>
+                  <input
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    placeholder="you@example.com"
+                    style={styles.input}
+                  />
+                </div>
+              </div>
+
+              <div style={styles.formGroup}>
+                <label style={styles.label}>Subject</label>
+                <input
+                  name="subject"
+                  value={form.subject}
+                  onChange={handleChange}
+                  placeholder="Research collaboration / Bug report / General enquiry"
+                  style={styles.input}
+                />
+              </div>
+
+              <div style={styles.formGroup}>
+                <label style={styles.label}>Message *</label>
+                <textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  placeholder="Write your message here..."
+                  rows={6}
+                  style={styles.textarea}
+                />
+              </div>
+
+              {status === 'missing' && (
+                <p style={styles.errorMsg}>⚠️ Please fill in your name, email and message.</p>
+              )}
+              {status === 'error' && (
+                <p style={styles.errorMsg}>❌ Something went wrong. Please try again or email us directly.</p>
+              )}
+              {status === 'success' && (
+                <p style={styles.successMsg}>✅ Message sent! We'll get back to you within 2–5 business days.</p>
+              )}
+
+              <button
+                onClick={handleSubmit}
+                disabled={status === 'sending'}
+                style={status === 'sending' ? styles.buttonDisabled : styles.button}
+              >
+                {status === 'sending' ? 'Sending...' : 'Send Message'}
+              </button>
             </div>
           </div>
         </main>
@@ -214,12 +329,111 @@ const styles = {
     border: "1px solid #f0d98a",
     borderRadius: "12px",
     padding: "16px 20px",
+    marginBottom: "40px",
   },
   noteText: {
     fontSize: "0.88rem",
     color: "#7a6a30",
     margin: 0,
     lineHeight: "1.6",
+  },
+  formCard: {
+    backgroundColor: "#ffffff",
+    border: "1px solid #e8e4d8",
+    borderRadius: "16px",
+    padding: "32px",
+    boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+  },
+  formTitle: {
+    fontSize: "1.3rem",
+    fontWeight: "700",
+    color: "#3a7d5a",
+    margin: "0 0 8px 0",
+  },
+  formSubtitle: {
+    fontSize: "0.9rem",
+    color: "#7a7a6a",
+    margin: "0 0 24px 0",
+    lineHeight: "1.6",
+  },
+  formRow: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    gap: "16px",
+  },
+  formGroup: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "6px",
+    marginBottom: "16px",
+  },
+  label: {
+    fontSize: "0.85rem",
+    fontWeight: "600",
+    color: "#4a4a3a",
+  },
+  input: {
+    padding: "10px 14px",
+    borderRadius: "8px",
+    border: "1px solid #e0dac8",
+    backgroundColor: "#fdf9f0",
+    fontSize: "0.92rem",
+    color: "#2d2d2d",
+    outline: "none",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+  },
+  textarea: {
+    padding: "10px 14px",
+    borderRadius: "8px",
+    border: "1px solid #e0dac8",
+    backgroundColor: "#fdf9f0",
+    fontSize: "0.92rem",
+    color: "#2d2d2d",
+    outline: "none",
+    resize: "vertical",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+  },
+  button: {
+    backgroundColor: "#3a7d5a",
+    color: "#fff",
+    padding: "12px 28px",
+    borderRadius: "10px",
+    border: "none",
+    fontWeight: "600",
+    fontSize: "0.95rem",
+    cursor: "pointer",
+    marginTop: "8px",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+  },
+  buttonDisabled: {
+    backgroundColor: "#9a9a8a",
+    color: "#fff",
+    padding: "12px 28px",
+    borderRadius: "10px",
+    border: "none",
+    fontWeight: "600",
+    fontSize: "0.95rem",
+    cursor: "not-allowed",
+    marginTop: "8px",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+  },
+  successMsg: {
+    backgroundColor: "#e8f5ee",
+    border: "1px solid #b8e4c9",
+    borderRadius: "8px",
+    padding: "12px 16px",
+    color: "#3a7d5a",
+    fontSize: "0.9rem",
+    marginBottom: "12px",
+  },
+  errorMsg: {
+    backgroundColor: "#fef0f0",
+    border: "1px solid #f5c6c6",
+    borderRadius: "8px",
+    padding: "12px 16px",
+    color: "#c0392b",
+    fontSize: "0.9rem",
+    marginBottom: "12px",
   },
   footer: {
     backgroundColor: "#ffffff",
