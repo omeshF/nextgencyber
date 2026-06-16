@@ -33,8 +33,8 @@ function MenuBar({ editor }) {
       {btn(() => editor.chain().focus().toggleHeading({ level: 3 }).run(), 'H3', editor.isActive('heading', { level: 3 }))}
       {btn(() => editor.chain().focus().toggleBulletList().run(), '• List', editor.isActive('bulletList'))}
       {btn(() => editor.chain().focus().toggleOrderedList().run(), '1. List', editor.isActive('orderedList'))}
-      {btn(() => editor.chain().focus().toggleBlockquote().run(), '" Quote', editor.isActive('blockquote'))}
-      {btn(() => editor.chain().focus().toggleCodeBlock().run(), '</> Code', editor.isActive('codeBlock'))}
+      {btn(() => editor.chain().focus().toggleBlockquote().run(), 'Quote', editor.isActive('blockquote'))}
+      {btn(() => editor.chain().focus().toggleCodeBlock().run(), 'Code', editor.isActive('codeBlock'))}
       <button
         onClick={() => {
           const url = window.prompt('Enter URL:')
@@ -43,11 +43,11 @@ function MenuBar({ editor }) {
         style={editor.isActive('link') ? styles.menuBtnActive : styles.menuBtn}
         type="button"
       >
-        🔗 Link
+        Link
       </button>
-      {btn(() => editor.chain().focus().setHorizontalRule().run(), '— HR', false)}
-      {btn(() => editor.chain().focus().undo().run(), '↩ Undo', false)}
-      {btn(() => editor.chain().focus().redo().run(), '↪ Redo', false)}
+      {btn(() => editor.chain().focus().setHorizontalRule().run(), 'HR', false)}
+      {btn(() => editor.chain().focus().undo().run(), 'Undo', false)}
+      {btn(() => editor.chain().focus().redo().run(), 'Redo', false)}
     </div>
   )
 }
@@ -127,7 +127,11 @@ export default function Editor() {
     setStatus(null)
     const content = editor?.getHTML() || ''
     const body = {
-      title, slug, excerpt, content, category,
+      title,
+      slug,
+      excerpt,
+      content,
+      category,
       cover_image: coverImage,
       published: publishOverride !== undefined ? publishOverride : published,
     }
@@ -143,7 +147,10 @@ export default function Editor() {
 
     if (res.ok) {
       setStatus('success')
-      if (!isEditing) router.push(`/admin/editor?slug=${slug}`)
+      if (!isEditing) {
+        const data = await res.json()
+        router.push(`/admin/editor?slug=${data.slug}`)
+      }
     } else {
       const err = await res.json()
       setStatus(err.error || 'error')
@@ -154,7 +161,7 @@ export default function Editor() {
   return (
     <>
       <Head>
-        <title>{isEditing ? 'Edit Article' : 'New Article'} — NextGenCyber Admin</title>
+        <title>{isEditing ? 'Edit Article' : 'New Article'} -- NextGenCyber Admin</title>
         <link rel="icon" href="/trafficlens.jpg" />
         <style>{`
           .ProseMirror h2 { font-size: 1.4rem; font-weight: 700; color: #3a4a3e; margin: 1.5rem 0 0.8rem; }
@@ -167,18 +174,25 @@ export default function Editor() {
           .ProseMirror img { max-width: 100%; border-radius: 8px; margin: 1rem 0; }
           .ProseMirror a { color: #D18B5B; text-decoration: underline; }
           .ProseMirror hr { border: none; border-top: 2px solid #e0d8cc; margin: 1.5rem 0; }
-          .ProseMirror p.is-editor-empty:first-child::before { color: #9aaa9e; content: attr(data-placeholder); float: left; height: 0; pointer-events: none; }
         `}</style>
       </Head>
 
       <div style={styles.page}>
         <nav style={styles.nav}>
-          <Link href="/admin" style={styles.navBrand}>← Dashboard</Link>
+          <Link href="/admin" style={styles.navBrand}>Back to Dashboard</Link>
           <div style={styles.navRight}>
-            <button onClick={() => handleSave(false)} disabled={saving} style={styles.draftBtn}>
+            <button
+              onClick={() => handleSave(false)}
+              disabled={saving}
+              style={styles.draftBtn}
+            >
               Save Draft
             </button>
-            <button onClick={() => handleSave(true)} disabled={saving} style={saving ? styles.publishBtnDisabled : styles.publishBtn}>
+            <button
+              onClick={() => handleSave(true)}
+              disabled={saving}
+              style={saving ? styles.publishBtnDisabled : styles.publishBtn}
+            >
               {saving ? 'Saving...' : published ? 'Update' : 'Publish'}
             </button>
           </div>
@@ -186,17 +200,16 @@ export default function Editor() {
 
         <main style={styles.main}>
           {status === 'success' && (
-            <div style={styles.successBanner}>✅ Article saved successfully!</div>
+            <div style={styles.successBanner}>Article saved successfully!</div>
           )}
           {status && status !== 'success' && (
-            <div style={styles.errorBanner}>❌ {status}</div>
+            <div style={styles.errorBanner}>Error: {status}</div>
           )}
 
           <div style={styles.formGrid}>
-            {/* Left column */}
             <div style={styles.leftCol}>
               <div style={styles.formGroup}>
-                <label style={styles.label}>Title *</label>
+                <label style={styles.label}>Title</label>
                 <input
                   value={title}
                   onChange={e => setTitle(e.target.value)}
@@ -227,7 +240,7 @@ export default function Editor() {
               </div>
 
               <div style={styles.editorCard}>
-                <label style={styles.label}>Content *</label>
+                <label style={styles.label}>Content</label>
                 <MenuBar editor={editor} />
                 <div style={styles.editorWrapper}>
                   <EditorContent editor={editor} />
@@ -235,7 +248,6 @@ export default function Editor() {
               </div>
             </div>
 
-            {/* Right column */}
             <div style={styles.rightCol}>
               <div style={styles.sideCard}>
                 <h3 style={styles.sideTitle}>Settings</h3>
@@ -247,7 +259,9 @@ export default function Editor() {
                     onChange={e => setCategory(e.target.value)}
                     style={styles.select}
                   >
-                    {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+                    {CATEGORIES.map(c => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
                   </select>
                 </div>
 
@@ -255,7 +269,7 @@ export default function Editor() {
                   <label style={styles.label}>Status</label>
                   <div style={styles.toggleRow}>
                     <span style={{ fontSize: "0.88rem", color: "#556B5A" }}>
-                      {published ? '🟢 Published' : '🟡 Draft'}
+                      {published ? 'Published' : 'Draft'}
                     </span>
                     <button
                       onClick={() => setPublished(!published)}
@@ -273,7 +287,7 @@ export default function Editor() {
                   <img src={coverImage} alt="Cover" style={styles.coverPreview} />
                 )}
                 <label style={styles.uploadBtn}>
-                  {uploading ? 'Uploading...' : '📁 Upload Image'}
+                  {uploading ? 'Uploading...' : 'Upload Image'}
                   <input
                     type="file"
                     accept="image/*"
@@ -282,30 +296,33 @@ export default function Editor() {
                   />
                 </label>
                 {coverImage && (
-                  <button onClick={() => setCoverImage('')} style={styles.removeBtn}>
+                  <button
+                    onClick={() => setCoverImage('')}
+                    style={styles.removeBtn}
+                  >
                     Remove Image
                   </button>
                 )}
               </div>
 
-{isEditing && (
-  <div style={styles.sideCard}>
-    <h3 style={styles.sideTitle}>Preview</h3>
-    
-      href={`/articles/${slug}`}
-      target="_blank"
-      rel="noreferrer"
-      style={styles.previewLink}
-    >
-      View Article →
-    </a>
-  </div>
-)}
-</div>  {/* rightCol */}
-</div>  {/* formGrid */}
-</main>
-</div>  {/* page */}
-</>
+              {isEditing && (
+                <div style={styles.sideCard}>
+                  <h3 style={styles.sideTitle}>Preview</h3>
+                  
+                    href={`/articles/${slug}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={styles.previewLink}
+                  >
+                    View Article
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </main>
+      </div>
+    </>
   )
 }
 
@@ -328,31 +345,68 @@ const styles = {
     top: 0,
     zIndex: 100,
   },
-  navBrand: { fontSize: "1rem", fontWeight: "600", color: "#556B5A", textDecoration: "none" },
+  navBrand: {
+    fontSize: "1rem",
+    fontWeight: "600",
+    color: "#556B5A",
+    textDecoration: "none",
+  },
   navRight: { display: "flex", gap: "10px" },
   draftBtn: {
-    backgroundColor: "#C9D8C4", color: "#556B5A", border: "none",
-    padding: "8px 18px", borderRadius: "8px", fontWeight: "600",
-    fontSize: "0.88rem", cursor: "pointer", fontFamily: "'Segoe UI', system-ui, sans-serif",
+    backgroundColor: "#C9D8C4",
+    color: "#556B5A",
+    border: "none",
+    padding: "8px 18px",
+    borderRadius: "8px",
+    fontWeight: "600",
+    fontSize: "0.88rem",
+    cursor: "pointer",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
   },
   publishBtn: {
-    backgroundColor: "#D18B5B", color: "#fff", border: "none",
-    padding: "8px 18px", borderRadius: "8px", fontWeight: "600",
-    fontSize: "0.88rem", cursor: "pointer", fontFamily: "'Segoe UI', system-ui, sans-serif",
+    backgroundColor: "#D18B5B",
+    color: "#fff",
+    border: "none",
+    padding: "8px 18px",
+    borderRadius: "8px",
+    fontWeight: "600",
+    fontSize: "0.88rem",
+    cursor: "pointer",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
   },
   publishBtnDisabled: {
-    backgroundColor: "#c9b8a8", color: "#fff", border: "none",
-    padding: "8px 18px", borderRadius: "8px", fontWeight: "600",
-    fontSize: "0.88rem", cursor: "not-allowed", fontFamily: "'Segoe UI', system-ui, sans-serif",
+    backgroundColor: "#c9b8a8",
+    color: "#fff",
+    border: "none",
+    padding: "8px 18px",
+    borderRadius: "8px",
+    fontWeight: "600",
+    fontSize: "0.88rem",
+    cursor: "not-allowed",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
   },
-  main: { maxWidth: "1200px", margin: "0 auto", padding: "32px 20px" },
+  main: {
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "32px 20px",
+  },
   successBanner: {
-    backgroundColor: "#e8f5ee", border: "1px solid #C1E1D2", borderRadius: "10px",
-    padding: "12px 16px", color: "#3a7d5a", marginBottom: "24px", fontSize: "0.9rem",
+    backgroundColor: "#e8f5ee",
+    border: "1px solid #C1E1D2",
+    borderRadius: "10px",
+    padding: "12px 16px",
+    color: "#3a7d5a",
+    marginBottom: "24px",
+    fontSize: "0.9rem",
   },
   errorBanner: {
-    backgroundColor: "#fef0f0", border: "1px solid #f5c6c6", borderRadius: "10px",
-    padding: "12px 16px", color: "#c0392b", marginBottom: "24px", fontSize: "0.9rem",
+    backgroundColor: "#fef0f0",
+    border: "1px solid #f5c6c6",
+    borderRadius: "10px",
+    padding: "12px 16px",
+    color: "#c0392b",
+    marginBottom: "24px",
+    fontSize: "0.9rem",
   },
   formGrid: {
     display: "grid",
@@ -363,81 +417,177 @@ const styles = {
   leftCol: { display: "flex", flexDirection: "column", gap: "20px" },
   rightCol: { display: "flex", flexDirection: "column", gap: "16px" },
   formGroup: { display: "flex", flexDirection: "column", gap: "6px" },
-  label: { fontSize: "0.82rem", fontWeight: "600", color: "#556B5A" },
+  label: {
+    fontSize: "0.82rem",
+    fontWeight: "600",
+    color: "#556B5A",
+    marginBottom: "4px",
+    display: "block",
+  },
   titleInput: {
-    padding: "12px 16px", borderRadius: "10px", border: "1px solid #e0d8cc",
-    backgroundColor: "#ffffff", fontSize: "1.2rem", fontWeight: "600",
-    color: "#3a4a3e", outline: "none", fontFamily: "'Segoe UI', system-ui, sans-serif",
+    padding: "12px 16px",
+    borderRadius: "10px",
+    border: "1px solid #e0d8cc",
+    backgroundColor: "#ffffff",
+    fontSize: "1.2rem",
+    fontWeight: "600",
+    color: "#3a4a3e",
+    outline: "none",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+    width: "100%",
+    boxSizing: "border-box",
   },
   input: {
-    padding: "10px 14px", borderRadius: "8px", border: "1px solid #e0d8cc",
-    backgroundColor: "#ffffff", fontSize: "0.9rem", color: "#3a4a3e",
-    outline: "none", fontFamily: "'Segoe UI', system-ui, sans-serif",
+    padding: "10px 14px",
+    borderRadius: "8px",
+    border: "1px solid #e0d8cc",
+    backgroundColor: "#ffffff",
+    fontSize: "0.9rem",
+    color: "#3a4a3e",
+    outline: "none",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+    width: "100%",
+    boxSizing: "border-box",
   },
   textarea: {
-    padding: "10px 14px", borderRadius: "8px", border: "1px solid #e0d8cc",
-    backgroundColor: "#ffffff", fontSize: "0.9rem", color: "#3a4a3e",
-    outline: "none", resize: "vertical", fontFamily: "'Segoe UI', system-ui, sans-serif",
+    padding: "10px 14px",
+    borderRadius: "8px",
+    border: "1px solid #e0d8cc",
+    backgroundColor: "#ffffff",
+    fontSize: "0.9rem",
+    color: "#3a4a3e",
+    outline: "none",
+    resize: "vertical",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+    width: "100%",
+    boxSizing: "border-box",
   },
   editorCard: {
-    backgroundColor: "#ffffff", border: "1px solid #e0d8cc",
-    borderRadius: "14px", overflow: "hidden",
+    backgroundColor: "#ffffff",
+    border: "1px solid #e0d8cc",
+    borderRadius: "14px",
+    overflow: "hidden",
     boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
   },
   menuBar: {
-    display: "flex", gap: "4px", flexWrap: "wrap", padding: "10px 12px",
-    borderBottom: "1px solid #e0d8cc", backgroundColor: "#FFF7EA",
+    display: "flex",
+    gap: "4px",
+    flexWrap: "wrap",
+    padding: "10px 12px",
+    borderBottom: "1px solid #e0d8cc",
+    backgroundColor: "#FFF7EA",
   },
   menuBtn: {
-    padding: "4px 10px", borderRadius: "6px", border: "1px solid #e0d8cc",
-    backgroundColor: "#ffffff", color: "#556B5A", fontSize: "0.78rem",
-    cursor: "pointer", fontWeight: "500", fontFamily: "'Segoe UI', system-ui, sans-serif",
+    padding: "4px 10px",
+    borderRadius: "6px",
+    border: "1px solid #e0d8cc",
+    backgroundColor: "#ffffff",
+    color: "#556B5A",
+    fontSize: "0.78rem",
+    cursor: "pointer",
+    fontWeight: "500",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
   },
   menuBtnActive: {
-    padding: "4px 10px", borderRadius: "6px", border: "1px solid #556B5A",
-    backgroundColor: "#C1E1D2", color: "#556B5A", fontSize: "0.78rem",
-    cursor: "pointer", fontWeight: "700", fontFamily: "'Segoe UI', system-ui, sans-serif",
+    padding: "4px 10px",
+    borderRadius: "6px",
+    border: "1px solid #556B5A",
+    backgroundColor: "#C1E1D2",
+    color: "#556B5A",
+    fontSize: "0.78rem",
+    cursor: "pointer",
+    fontWeight: "700",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
   },
   editorWrapper: {
-    backgroundColor: "#ffffff", minHeight: "400px",
+    backgroundColor: "#ffffff",
+    minHeight: "400px",
   },
   sideCard: {
-    backgroundColor: "#ffffff", border: "1px solid #e0d8cc",
-    borderRadius: "14px", padding: "20px",
+    backgroundColor: "#ffffff",
+    border: "1px solid #e0d8cc",
+    borderRadius: "14px",
+    padding: "20px",
     boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
   },
-  sideTitle: { fontSize: "0.95rem", fontWeight: "700", color: "#556B5A", margin: "0 0 16px 0" },
-  select: {
-    padding: "9px 12px", borderRadius: "8px", border: "1px solid #e0d8cc",
-    backgroundColor: "#FFF7EA", fontSize: "0.88rem", color: "#3a4a3e",
-    outline: "none", fontFamily: "'Segoe UI', system-ui, sans-serif", width: "100%",
+  sideTitle: {
+    fontSize: "0.95rem",
+    fontWeight: "700",
+    color: "#556B5A",
+    margin: "0 0 16px 0",
   },
-  toggleRow: { display: "flex", justifyContent: "space-between", alignItems: "center" },
+  select: {
+    padding: "9px 12px",
+    borderRadius: "8px",
+    border: "1px solid #e0d8cc",
+    backgroundColor: "#FFF7EA",
+    fontSize: "0.88rem",
+    color: "#3a4a3e",
+    outline: "none",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+    width: "100%",
+  },
+  toggleRow: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   toggleOn: {
-    backgroundColor: "#3a7d5a", color: "#fff", border: "none",
-    padding: "5px 14px", borderRadius: "20px", fontWeight: "600",
-    fontSize: "0.78rem", cursor: "pointer", fontFamily: "'Segoe UI', system-ui, sans-serif",
+    backgroundColor: "#3a7d5a",
+    color: "#fff",
+    border: "none",
+    padding: "5px 14px",
+    borderRadius: "20px",
+    fontWeight: "600",
+    fontSize: "0.78rem",
+    cursor: "pointer",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
   },
   toggleOff: {
-    backgroundColor: "#e0d8cc", color: "#9aaa9e", border: "none",
-    padding: "5px 14px", borderRadius: "20px", fontWeight: "600",
-    fontSize: "0.78rem", cursor: "pointer", fontFamily: "'Segoe UI', system-ui, sans-serif",
+    backgroundColor: "#e0d8cc",
+    color: "#9aaa9e",
+    border: "none",
+    padding: "5px 14px",
+    borderRadius: "20px",
+    fontWeight: "600",
+    fontSize: "0.78rem",
+    cursor: "pointer",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
   },
   coverPreview: {
-    width: "100%", height: "140px", objectFit: "cover",
-    borderRadius: "8px", marginBottom: "10px",
+    width: "100%",
+    height: "140px",
+    objectFit: "cover",
+    borderRadius: "8px",
+    marginBottom: "10px",
   },
   uploadBtn: {
-    display: "block", textAlign: "center", padding: "9px",
-    backgroundColor: "#C9D8C4", color: "#556B5A", borderRadius: "8px",
-    cursor: "pointer", fontWeight: "600", fontSize: "0.85rem", marginBottom: "8px",
+    display: "block",
+    textAlign: "center",
+    padding: "9px",
+    backgroundColor: "#C9D8C4",
+    color: "#556B5A",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontWeight: "600",
+    fontSize: "0.85rem",
+    marginBottom: "8px",
   },
   removeBtn: {
-    width: "100%", backgroundColor: "transparent", color: "#c0392b",
-    border: "1px solid #f5c6c6", borderRadius: "8px", padding: "7px",
-    cursor: "pointer", fontSize: "0.82rem", fontFamily: "'Segoe UI', system-ui, sans-serif",
+    width: "100%",
+    backgroundColor: "transparent",
+    color: "#c0392b",
+    border: "1px solid #f5c6c6",
+    borderRadius: "8px",
+    padding: "7px",
+    cursor: "pointer",
+    fontSize: "0.82rem",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
   },
   previewLink: {
-    color: "#D18B5B", textDecoration: "none", fontWeight: "600", fontSize: "0.9rem",
+    color: "#D18B5B",
+    textDecoration: "none",
+    fontWeight: "600",
+    fontSize: "0.9rem",
   },
 }
