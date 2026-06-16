@@ -31,8 +31,8 @@ function MenuBar({ editor }) {
       {btn(() => editor.chain().focus().toggleItalic().run(), 'I', editor.isActive('italic'))}
       {btn(() => editor.chain().focus().toggleHeading({ level: 2 }).run(), 'H2', editor.isActive('heading', { level: 2 }))}
       {btn(() => editor.chain().focus().toggleHeading({ level: 3 }).run(), 'H3', editor.isActive('heading', { level: 3 }))}
-      {btn(() => editor.chain().focus().toggleBulletList().run(), '• List', editor.isActive('bulletList'))}
-      {btn(() => editor.chain().focus().toggleOrderedList().run(), '1. List', editor.isActive('orderedList'))}
+      {btn(() => editor.chain().focus().toggleBulletList().run(), 'List', editor.isActive('bulletList'))}
+      {btn(() => editor.chain().focus().toggleOrderedList().run(), 'Ordered', editor.isActive('orderedList'))}
       {btn(() => editor.chain().focus().toggleBlockquote().run(), 'Quote', editor.isActive('blockquote'))}
       {btn(() => editor.chain().focus().toggleCodeBlock().run(), 'Code', editor.isActive('codeBlock'))}
       <button
@@ -42,9 +42,7 @@ function MenuBar({ editor }) {
         }}
         style={editor.isActive('link') ? styles.menuBtnActive : styles.menuBtn}
         type="button"
-      >
-        Link
-      </button>
+      >Link</button>
       {btn(() => editor.chain().focus().setHorizontalRule().run(), 'HR', false)}
       {btn(() => editor.chain().focus().undo().run(), 'Undo', false)}
       {btn(() => editor.chain().focus().redo().run(), 'Redo', false)}
@@ -83,7 +81,7 @@ export default function Editor() {
 
   useEffect(() => {
     if (!editSlug) return
-    fetch(`/api/articles/${editSlug}`)
+    fetch('/api/articles/' + editSlug)
       .then(r => r.ok ? r.json() : Promise.reject())
       .then(data => {
         setTitle(data.title)
@@ -137,7 +135,7 @@ export default function Editor() {
     }
 
     const res = await fetch(
-      isEditing ? `/api/articles/${editSlug}` : '/api/articles',
+      isEditing ? '/api/articles/' + editSlug : '/api/articles',
       {
         method: isEditing ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -149,7 +147,7 @@ export default function Editor() {
       setStatus('success')
       if (!isEditing) {
         const data = await res.json()
-        router.push(`/admin/editor?slug=${data.slug}`)
+        router.push('/admin/editor?slug=' + data.slug)
       }
     } else {
       const err = await res.json()
@@ -305,19 +303,12 @@ export default function Editor() {
                 )}
               </div>
 
-              {isEditing && (
-  <div style={styles.sideCard}>
-    <h3 style={styles.sideTitle}>Preview</h3>
-    
-      href={'/articles/' + slug}
-      target="_blank"
-      rel="noreferrer"
-      style={styles.previewLink}
-    >
-      View Article
-        </a>
-        </div>
-    )}
+               {isEditing && (
+                    <div style={styles.sideCard}>
+                        <h3 style={styles.sideTitle}>Preview</h3>
+                        <a href={'/articles/' + slug} target="_blank" rel="noreferrer" style={styles.previewLink}>View Article</a>
+                    </div>
+                )}
             </div>
           </div>
         </main>
