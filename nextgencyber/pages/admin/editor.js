@@ -17,7 +17,26 @@ function slugify(text) {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 }
 
-function buildHarvardCitation(fields) {
+function buildInTextCitation(fields) {
+  const { authors, year } = fields
+  const surnames = authors
+    .split(/\s+and\s+|,\s*&\s*/i)
+    .map(part => part.split(',')[0].trim())
+    .filter(Boolean)
+
+  let inText = ''
+  if (surnames.length === 1) {
+    inText = surnames[0]
+  } else if (surnames.length === 2) {
+    inText = surnames[0] + ' and ' + surnames[1]
+  } else if (surnames.length > 2) {
+    inText = surnames[0] + ' et al.'
+  }
+
+  return '(' + inText + ', ' + year + ')'
+}
+
+function buildHarvardReference(fields) {
   const { authors, year, title, source, publisher, url, accessDate } = fields
   let citation = ''
 
@@ -43,7 +62,9 @@ function CitationModal({ onInsert, onClose }) {
   const [url, setUrl] = useState('')
   const [accessDate, setAccessDate] = useState('')
 
-  const preview = buildHarvardCitation({ authors, year, title, source, publisher, url, accessDate })
+  const fields = { authors, year, title, source, publisher, url, accessDate }
+  const inTextPreview = authors && year ? buildInTextCitation(fields) : ''
+  const referencePreview = buildHarvardReference(fields)
 
   return (
     <div style={styles.modalOverlay}>
@@ -117,14 +138,19 @@ function CitationModal({ onInsert, onClose }) {
         </div>
 
         <div style={styles.previewBox}>
-          <p style={styles.previewLabel}>Preview:</p>
-          <p style={styles.previewText}>{preview || 'Citation preview will appear here...'}</p>
+          <p style={styles.previewLabel}>In-text citation (inserted at cursor):</p>
+          <p style={styles.previewText}>{inTextPreview || 'Fill in author and year...'}</p>
+        </div>
+
+        <div style={styles.previewBox}>
+          <p style={styles.previewLabel}>Full reference (added to reference list):</p>
+          <p style={styles.previewText}>{referencePreview || 'Reference preview will appear here...'}</p>
         </div>
 
         <div style={styles.modalActions}>
           <button onClick={onClose} style={styles.modalCancelBtn}>Cancel</button>
           <button
-            onClick={() => onInsert(preview)}
+            onClick={() => onInsert(inTextPreview, referencePreview)}
             disabled={!authors || !year || !title}
             style={(!authors || !year || !title) ? styles.modalInsertBtnDisabled : styles.modalInsertBtn}
           >
@@ -207,6 +233,7 @@ export default function Editor() {
   const [uploading, setUploading] = useState(false)
   const [uploadingFigure, setUploadingFigure] = useState(false)
   const [showCiteModal, setShowCiteModal] = useState(false)
+  const [references, setReferences] = useState([])
 
   const editor = useEditor({
     extensions: [
@@ -288,11 +315,21 @@ export default function Editor() {
     reader.readAsDataURL(file)
   }, [editor])
 
-  const handleInsertCitation = (citationText) => {
+  const handleInsertCitation = (inTextCitation, fullReference) => {
     if (editor) {
-      editor.chain().focus().insertContent('<p>' + citationText + '</p>').run()
+      editor.chain().focus().insertContent(inTextCitation + ' ').run()
     }
+    setReferences(prev => prev.includes(fullReference) ? prev : [...prev, fullReference])
     setShowCiteModal(false)
+  }
+
+  const handleInsertReferenceList = () => {
+    if (!editor || references.length === 0) return
+    const list = [...references]
+      .sort()
+      .map(ref => '<p>' + ref + '</p>')
+      .join('')
+    editor.chain().focus().insertContent('<h2>References</h2>' + list).run()
   }
 
   const handleSave = async (publishOverride) => {
@@ -490,6 +527,31 @@ export default function Editor() {
                   >
                     Remove Image
                   </button>
+                )}
+              </div>
+
+              <div style={styles.sideCard}>
+                <h3 style={styles.sideTitle}>References ({references.length})</h3>
+                {references.length === 0 ? (
+                  <p style={{ fontSize: "0.82rem", color: "#9aaa9e", margin: 0 }}>
+                    No citations added yet. Use the Cite (Harvard) button in the toolbar.
+                  </p>
+                ) : (
+                  <>
+                    <ul style={{ paddingLeft: "18px", margin: "0 0 12px 0" }}>
+                      {[...references].sort().map((ref, i) => (
+                        <li key={i} style={{ fontSize: "0.78rem", color: "#556B5A", marginBottom: "6px", lineHeight: "1.5" }}>
+                          {ref}
+                        </li>
+                      ))}
+                    </ul>
+                    <button
+                      onClick={handleInsertReferenceList}
+                      style={styles.uploadBtn}
+                    >
+                      Insert Reference List at Cursor
+                    </button>
+                  </>
                 )}
               </div>
 
@@ -784,6 +846,7 @@ const styles = {
   },
   uploadBtn: {
     display: "block",
+    width: "100%",
     textAlign: "center",
     padding: "9px",
     backgroundColor: "#C9D8C4",
@@ -793,6 +856,8 @@ const styles = {
     fontWeight: "600",
     fontSize: "0.85rem",
     marginBottom: "8px",
+    border: "none",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
   },
   removeBtn: {
     width: "100%",
@@ -848,7 +913,7 @@ const styles = {
     border: "1px solid #e0d8cc",
     borderRadius: "10px",
     padding: "14px 16px",
-    marginBottom: "20px",
+    marginBottom: "16px",
   },
   previewLabel: {
     fontSize: "0.78rem",
