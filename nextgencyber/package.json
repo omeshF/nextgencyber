@@ -17,6 +17,10 @@
     "@tiptap/starter-kit": "^2.4.0",
     "@tiptap/extension-image": "^2.4.0",
     "@tiptap/extension-link": "^2.4.0",
+    "@tiptap/extension-table": "^2.4.0",
+    "@tiptap/extension-table-row": "^2.4.0",
+    "@tiptap/extension-table-cell": "^2.4.0",
+    "@tiptap/extension-table-header": "^2.4.0",
     "cookie": "^0.6.0",
     "resend": "^3.2.0"
   }
