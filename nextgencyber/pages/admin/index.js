@@ -9,7 +9,7 @@ export default function AdminDashboard() {
   const router = useRouter()
 
   useEffect(() => {
-    fetch('/api/article/all')
+    fetch('/api/articles/all')
       .then(r => r.ok ? r.json() : Promise.reject())
       .then(data => { setArticles(data); setLoading(false) })
       .catch(() => { router.push('/admin/login'); setLoading(false) })
