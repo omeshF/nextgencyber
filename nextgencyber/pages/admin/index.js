@@ -9,7 +9,7 @@ export default function AdminDashboard() {
   const router = useRouter()
 
   useEffect(() => {
-    fetch('/api/articles/all')
+    fetch('/api/article/all')
       .then(r => r.ok ? r.json() : Promise.reject())
       .then(data => { setArticles(data); setLoading(false) })
       .catch(() => { router.push('/admin/login'); setLoading(false) })
@@ -17,7 +17,7 @@ export default function AdminDashboard() {
 
   const handleDelete = async (slug) => {
     if (!confirm('Delete this article?')) return
-    await fetch(`/api/articles/${slug}`, { method: 'DELETE' })
+    await fetch(`/api/article/${slug}`, { method: 'DELETE' })
     setArticles(articles.filter(a => a.slug !== slug))
   }
 

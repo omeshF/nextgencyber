@@ -306,7 +306,7 @@ export default function Editor() {
                {isEditing && (
                     <div style={styles.sideCard}>
                         <h3 style={styles.sideTitle}>Preview</h3>
-                        <a href={'/articles/' + slug} target="_blank" rel="noreferrer" style={styles.previewLink}>View Article</a>
+                        <a href={'/article/' + slug} target="_blank" rel="noreferrer" style={styles.previewLink}>View Article</a>
                     </div>
                 )}
             </div>

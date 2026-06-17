@@ -1,23 +1,58 @@
 import Head from 'next/head'
 import Script from 'next/script'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
+
+const CATEGORIES = ['All', 'Further Education', 'Higher Education', 'Learner Engagement', 'Gamified Learning', 'AI & Education', 'AI & Cyber']
+
+const NAV = () => (
+  <nav style={styles.nav}>
+    <Link href="/" style={styles.navBrand}>🛡️ NextGenCyber</Link>
+    <div style={styles.navLinks}>
+      <Link href="/" style={styles.navLinkActive}>Articles</Link>
+      <Link href="/tools" style={styles.navLink}>Tools</Link>
+      <a href="https://learningpark.nextgencyber.co.uk" style={styles.navLink}>LearningPark</a>
+      <Link href="/about" style={styles.navLink}>About</Link>
+      <Link href="/contact" style={styles.navLink}>Contact</Link>
+    </div>
+  </nav>
+)
+
+const FOOTER = () => (
+  <footer style={styles.footer}>
+    <div style={styles.footerLinks}>
+      <Link href="/" style={styles.footerLink}>Home</Link>
+      <Link href="/tools" style={styles.footerLink}>Tools</Link>
+      <Link href="/about" style={styles.footerLink}>About</Link>
+      <Link href="/contact" style={styles.footerLink}>Contact</Link>
+      <a href="https://github.com/omeshF" style={styles.footerLink}>GitHub</a>
+    </div>
+    <p style={styles.footerText}>© {new Date().getFullYear()} Omesh Fernando · University of Hertfordshire · MIT License</p>
+  </footer>
+)
 
 export default function Home() {
+  const [articles, setArticles] = useState([])
+  const [category, setCategory] = useState('All')
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/articles')
+      .then(r => r.json())
+      .then(data => { setArticles(Array.isArray(data) ? data : []); setLoading(false) })
+      .catch(() => setLoading(false))
+  }, [])
+
+  const filtered = category === 'All' ? articles : articles.filter(a => a.category === category)
+
   return (
     <>
       <Head>
-        <title>NextGenCyber — Network Traffic to Image Converter</title>
-        <meta name="description" content="Convert network traffic CSV files into CNN-ready RGB images for anomaly detection, or decode images back to CSV. Free open-source tool by Dr Omesh Fernando, University of Hertfordshire." />
-        <meta name="keywords" content="network traffic, CSV to image, CNN, anomaly detection, cybersecurity, machine learning, net2i, i2net, 5G security" />
+        <title>NextGenCyber — Education & Cybersecurity Articles</title>
+        <meta name="description" content="Articles on further education, higher education, learner engagement, gamified learning, AI tools for education, and AI in cybersecurity." />
         <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
-        <meta property="og:title" content="NextGenCyber — Network Traffic to Image Converter" />
-        <meta property="og:description" content="Convert network traffic CSV to CNN-ready images for ML-based anomaly detection." />
-        <meta property="og:url" content="https://www.nextgencyber.co.uk" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/trafficlens.png" />
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3806712449234414"
-     crossorigin="anonymous"></script>
-     <meta name="google-adsense-account" content="ca-pub-3806712449234414"></meta>
+        <link rel="icon" href="/trafficlens.jpg" />
       </Head>
 
       <Script
@@ -27,196 +62,90 @@ export default function Home() {
         strategy="afterInteractive"
       />
 
-      <Script
-        type="module"
-        src="https://gradio.s3-us-west-2.amazonaws.com/6.14.0/gradio.js"
-        strategy="afterInteractive"
-      />
-
       <div style={styles.page}>
-        <nav style={styles.nav}>
-          <Link href="/" style={styles.navBrand}>🛡️ NextGenCyber</Link>
-          <div style={styles.navLinks}>
-            <Link href="/" style={styles.navLinkActive}>TrafficLens</Link>
-            <a href="https://learningpark.nextgencyber.co.uk" style={styles.navLink}>LearningPark</a>
-            <Link href="/about" style={styles.navLink}>About</Link>
-            <Link href="/contact" style={styles.navLink}>Contact</Link>
-          </div>
-        </nav>
+        <NAV />
 
         <main style={styles.main}>
-          <header style={styles.header}>
-            <h1 style={styles.title}>
-              <img src="/trafficlens.png" alt="TrafficLens" style={styles.titleLogo} />
-              TrafficLens
-            </h1>
+          <header style={styles.hero}>
+            <h1 style={styles.heroTitle}>Insights in Education & Cybersecurity</h1>
             <div style={styles.divider} />
-            <p style={styles.subtitle}>
-              Convert network traffic CSV files into CNN-ready RGB images for anomaly detection,
-              or decode images back to CSV. Powered by{" "}
-              <a href="https://pypi.org/project/net2i/" style={styles.link}>net2i</a>
-              {" & "}
-              <a href="https://pypi.org/project/i2net/" style={styles.link}>i2net</a>
-              {" · "}
-              <a href="https://www.mdpi.com/2673-8732/5/4/42" style={styles.link}>MDPI Network 2025</a>
-              {" · "}
-              <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.link}>IEEE WCNC 2023</a>
+            <p style={styles.heroSubtitle}>
+              Articles on further education, higher education, learner engagement,
+              gamified learning, AI tools for education, and AI in cybersecurity.
             </p>
           </header>
 
-          <div style={styles.appWrapper}>
-            <gradio-app src="https://omeshf91-trafficlens.hf.space" />
+          <div style={styles.categoryRow}>
+            {CATEGORIES.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setCategory(cat)}
+                style={category === cat ? styles.catActive : styles.catBtn}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
 
-          <section style={styles.infoSection}>
-            <h2 style={styles.infoHeading}>What is TrafficLens?</h2>
-            <p style={styles.infoText}>
-              TrafficLens implements the NeT2I (Network Traffic to Image) and I2NeT (Image to Network)
-              algorithms developed at the University of Hertfordshire. It encodes network traffic
-              features — including IPv4/IPv6 addresses, MAC addresses, timestamps, and flow statistics —
-              into RGB pixel values, producing images that can be directly fed into Convolutional Neural
-              Networks (CNNs) for intrusion detection and anomaly classification.
-            </p>
-            <p style={styles.infoText}>
-              This approach introduces CiNeT, a novel deep learning-based Intrusion Detection System
-              employing a bijective encoding–decoding framework between network traffic features and
-              their RGB representations. The pipeline provides a lossless, deterministic method for
-              encoding and decoding both IPv4 and IPv6 network data, validated in 5G and Mobile Edge
-              Computing (MEC) environments. The bidirectional design means encoded data can be fully
-              reconstructed back to CSV format, making it suitable for research pipelines requiring
-              lossless round-trips.
-            </p>
-            <p style={styles.infoText}>
-              Published in{" "}
-              <a href="https://www.mdpi.com/2673-8732/5/4/42" style={styles.link}>
-                MDPI Network (2025)
+          {loading ? (
+            <div style={styles.loadingRow}>
+              {[1,2,3].map(i => <div key={i} style={styles.skeleton} />)}
+            </div>
+          ) : filtered.length === 0 ? (
+            <div style={styles.empty}>
+              <p style={styles.emptyText}>No articles yet in this category. Check back soon!</p>
+            </div>
+          ) : (
+            <div style={styles.grid}>
+              {filtered.map(article => (
+                <Link key={article.id} href={'/article/' + article.slug} style={styles.card}>
+                  {article.cover_image && (
+                    <img src={article.cover_image} alt={article.title} style={styles.cardImg} />
+                  )}
+                  {!article.cover_image && (
+                    <div style={styles.cardImgPlaceholder}>📝</div>
+                  )}
+                  <div style={styles.cardBody}>
+                    <span style={styles.cardCategory}>{article.category}</span>
+                    <h2 style={styles.cardTitle}>{article.title}</h2>
+                    <p style={styles.cardExcerpt}>{article.excerpt}</p>
+                    <div style={styles.cardFooter}>
+                      <span style={styles.cardDate}>
+                        {new Date(article.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                      </span>
+                      <span style={styles.cardRead}>Read →</span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {/* Tools section */}
+          <section style={styles.toolsSection}>
+            <h2 style={styles.toolsHeading}>Research Tools</h2>
+            <div style={styles.toolsGrid}>
+              <Link href="/tools" style={styles.toolCard}>
+                <img src="/trafficlens.png" alt="TrafficLens" style={styles.toolLogo} />
+                <div>
+                  <h3 style={styles.toolName}>TrafficLens</h3>
+                  <p style={styles.toolDesc}>Convert network traffic CSV to CNN-ready images for anomaly detection.</p>
+                  <span style={styles.toolLink}>Open Tool →</span>
+                </div>
+              </Link>
+              <a href="https://learningpark.nextgencyber.co.uk" style={styles.toolCard}>
+                <img src="/favicon.svg" alt="LearningPark" style={styles.toolLogo} />
+                <div>
+                  <h3 style={styles.toolName}>LearningPark</h3>
+                  <p style={styles.toolDesc}>Gamified learning platform for educators to improve learner engagement.</p>
+                  <span style={styles.toolLink}>Visit Platform →</span>
+                </div>
               </a>
-              {" "}and presented at the{" "}
-              <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.link}>
-                IEEE Wireless Communications and Networking Conference (WCNC) 2023
-              </a>.
-            </p>
-          </section>
-
-          <section style={styles.cardRow}>
-            <div style={styles.featureCard}>
-              <span style={styles.featureIcon}>📤</span>
-              <h3 style={styles.featureTitle}>CSV → Images</h3>
-              <p style={styles.featureText}>
-                Upload a network traffic CSV. Each row is encoded into an RGB image using IEEE 754
-                floating-point encoding for numeric fields, and specialised encoders for IP, MAC,
-                and timestamp fields.
-              </p>
-            </div>
-            <div style={styles.featureCard}>
-              <span style={styles.featureIcon}>📥</span>
-              <h3 style={styles.featureTitle}>Images → CSV</h3>
-              <p style={styles.featureText}>
-                Upload a ZIP of net2i-generated PNG images or individual files to reconstruct the
-                original CSV. Supports both IPv4 and IPv6 encoded datasets with adaptive decoding.
-              </p>
-            </div>
-            <div style={styles.featureCard}>
-              <span style={styles.featureIcon}>🧠</span>
-              <h3 style={styles.featureTitle}>CNN Ready</h3>
-              <p style={styles.featureText}>
-                Output images are sized and structured for direct use as input to CNN architectures
-                for network intrusion detection systems (NIDS) and traffic classification models.
-              </p>
-            </div>
-            <div style={styles.featureCard}>
-              <span style={styles.featureIcon}>🌐</span>
-              <h3 style={styles.featureTitle}>IPv4 & IPv6</h3>
-              <p style={styles.featureText}>
-                Full support for both IPv4 and IPv6 network traffic datasets, with automatic protocol
-                detection and separate encoding strategies optimised for each address format.
-              </p>
-            </div>
-          </section>
-
-          <section style={styles.usageSection}>
-            <h2 style={styles.infoHeading}>How to Use</h2>
-            <div style={styles.stepsRow}>
-              <div style={styles.step}>
-                <div style={styles.stepNumber}>1</div>
-                <p style={styles.stepText}>
-                  Select the <strong>CSV → Images</strong> tab and upload your network traffic CSV file.
-                </p>
-              </div>
-              <div style={styles.step}>
-                <div style={styles.stepNumber}>2</div>
-                <p style={styles.stepText}>
-                  Click <strong>Convert to Images</strong> and wait for processing to complete.
-                </p>
-              </div>
-              <div style={styles.step}>
-                <div style={styles.stepNumber}>3</div>
-                <p style={styles.stepText}>
-                  Download the ZIP file containing your encoded PNG images and metadata JSON files.
-                </p>
-              </div>
-              <div style={styles.step}>
-                <div style={styles.stepNumber}>4</div>
-                <p style={styles.stepText}>
-                  Use the <strong>Images → CSV</strong> tab to decode images back to CSV at any time.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section style={styles.citationSection}>
-            <h2 style={styles.infoHeading}>Citation</h2>
-            <p style={styles.infoText}>
-              If you use TrafficLens or the NeT2I algorithms in your research, please cite:
-            </p>
-
-            <p style={styles.infoText}><strong>Primary paper (MDPI Network 2025):</strong></p>
-            <pre style={styles.codeBlock}>{`@article{fernando2025bijective,
-  title={Bijective Network-to-Image Encoding for Interpretable
-         CNN-Based Intrusion Detection System},
-  author={Fernando, Omesh A and Spring, Joseph and Xiao, Hannan},
-  journal={Network},
-  volume={5},
-  number={4},
-  pages={42},
-  year={2025},
-  publisher={MDPI}
-}`}</pre>
-
-            <p style={styles.infoText}><strong>Conference paper (IEEE WCNC 2023):</strong></p>
-            <pre style={styles.codeBlock}>{`@inproceedings{fernando2023new,
-  title={New algorithms for the detection of malicious traffic in 5g-mec},
-  author={Fernando, Omesh A and Xiao, Hannan and Spring, Joseph},
-  booktitle={2023 IEEE Wireless Communications and Networking
-             Conference (WCNC)},
-  pages={1--6},
-  year={2023},
-  organization={IEEE}
-}`}</pre>
-
-            <div style={styles.citationLinks}>
-              <a href="https://www.mdpi.com/2673-8732/5/4/42" style={styles.pill}>MDPI Network 2025</a>
-              <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.pill}>IEEE WCNC 2023</a>
-              <a href="https://pypi.org/project/net2i/" style={styles.pill}>net2i on PyPI</a>
-              <a href="https://pypi.org/project/i2net/" style={styles.pill}>i2net on PyPI</a>
-              <a href="https://github.com/omeshF/NeT2I" style={styles.pill}>GitHub</a>
             </div>
           </section>
         </main>
 
-        <footer style={styles.footer}>
-          <div style={styles.footerLinks}>
-            <Link href="/" style={styles.footerLink}>Home</Link>
-            <Link href="/about" style={styles.footerLink}>About</Link>
-            <Link href="/contact" style={styles.footerLink}>Contact</Link>
-            <a href="https://github.com/omeshF" style={styles.footerLink}>GitHub</a>
-            <a href="https://pypi.org/user/omeshf91/" style={styles.footerLink}>PyPI</a>
-            <a href="https://ieeexplore.ieee.org/abstract/document/10118803" style={styles.footerLink}>IEEE Paper</a>
-          </div>
-          <p style={styles.footerText}>
-            © {new Date().getFullYear()} Omesh Fernando · University of Hertfordshire · MIT License
-          </p>
-        </footer>
+        <FOOTER />
       </div>
     </>
   )
@@ -225,42 +154,42 @@ export default function Home() {
 const styles = {
   page: {
     minHeight: "100vh",
-    backgroundColor: "#fdf9f0",
-    color: "#2d2d2d",
+    backgroundColor: "#FFF7EA",
+    color: "#556B5A",
     fontFamily: "'Segoe UI', system-ui, sans-serif",
     display: "flex",
     flexDirection: "column",
   },
   nav: {
-    backgroundColor: "#ffffff",
-    borderBottom: "1px solid #e8e4d8",
+    backgroundColor: "#C1E1D2",
+    borderBottom: "1px solid #a8cfc0",
     padding: "14px 40px",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     flexWrap: "wrap",
     gap: "12px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
   },
   navBrand: {
     fontSize: "1.2rem",
     fontWeight: "700",
-    color: "#3a7d5a",
+    color: "#556B5A",
     textDecoration: "none",
   },
-  navLinks: { display: "flex", gap: "28px" },
+  navLinks: { display: "flex", gap: "28px", flexWrap: "wrap" },
   navLink: {
-    color: "#4a4a3a",
+    color: "#556B5A",
     textDecoration: "none",
     fontSize: "0.95rem",
     fontWeight: "500",
   },
   navLinkActive: {
-    color: "#3a7d5a",
+    color: "#556B5A",
     textDecoration: "none",
     fontSize: "0.95rem",
     fontWeight: "700",
-    borderBottom: "2px solid #3a7d5a",
+    borderBottom: "2px solid #556B5A",
     paddingBottom: "2px",
   },
   main: {
@@ -268,171 +197,222 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: "40px 20px",
+    padding: "50px 20px",
   },
-  header: {
+  hero: {
     textAlign: "center",
-    marginBottom: "30px",
-    width: "100%",
-    maxWidth: "1100px",
+    marginBottom: "40px",
+    maxWidth: "700px",
   },
-  title: {
-    fontSize: "2.2rem",
+  heroTitle: {
+    fontSize: "2.4rem",
     fontWeight: "700",
-    color: "#3a7d5a",
+    color: "#556B5A",
     margin: "0 0 12px 0",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "12px",
-  },
-  titleLogo: {
-    width: "48px",
-    height: "48px",
-    objectFit: "contain",
-    borderRadius: "10px",
+    lineHeight: "1.3",
   },
   divider: {
     height: "4px",
     width: "60px",
     borderRadius: "4px",
-    background: "linear-gradient(90deg, #b8e4c9, #ffe599, #b8d8f0)",
+    background: "linear-gradient(90deg, #C1E1D2, #D18B5B, #C9D8C4)",
     margin: "0 auto 16px",
   },
-  subtitle: {
-    color: "#7a7a6a",
+  heroSubtitle: {
     fontSize: "1rem",
-    lineHeight: "1.6",
+    color: "#7a8f7e",
+    lineHeight: "1.7",
+    margin: 0,
   },
-  appWrapper: {
+  categoryRow: {
+    display: "flex",
+    gap: "10px",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    marginBottom: "40px",
+    maxWidth: "900px",
+    width: "100%",
+  },
+  catBtn: {
+    backgroundColor: "#C9D8C4",
+    color: "#556B5A",
+    border: "none",
+    padding: "7px 16px",
+    borderRadius: "20px",
+    fontSize: "0.82rem",
+    fontWeight: "500",
+    cursor: "pointer",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+  },
+  catActive: {
+    backgroundColor: "#556B5A",
+    color: "#FFF7EA",
+    border: "none",
+    padding: "7px 16px",
+    borderRadius: "20px",
+    fontSize: "0.82rem",
+    fontWeight: "600",
+    cursor: "pointer",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+  },
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+    gap: "24px",
     width: "100%",
     maxWidth: "1100px",
-    borderRadius: "16px",
-    overflow: "hidden",
-    border: "1px solid #e8e4d8",
-    boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-    marginBottom: "50px",
+    marginBottom: "60px",
   },
-  infoSection: {
+  card: {
+    backgroundColor: "#ffffff",
+    border: "1px solid #e0d8cc",
+    borderRadius: "16px",
+    textDecoration: "none",
+    color: "#556B5A",
+    overflow: "hidden",
+    boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+    display: "flex",
+    flexDirection: "column",
+  },
+  cardImg: {
+    width: "100%",
+    height: "180px",
+    objectFit: "cover",
+  },
+  cardImgPlaceholder: {
+    width: "100%",
+    height: "180px",
+    backgroundColor: "#C9D8C4",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "3rem",
+  },
+  cardBody: {
+    padding: "20px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "8px",
+    flexGrow: 1,
+  },
+  cardCategory: {
+    fontSize: "0.72rem",
+    backgroundColor: "#C1E1D2",
+    color: "#556B5A",
+    padding: "3px 10px",
+    borderRadius: "20px",
+    alignSelf: "flex-start",
+    fontWeight: "600",
+  },
+  cardTitle: {
+    fontSize: "1.1rem",
+    fontWeight: "700",
+    margin: 0,
+    color: "#3a4a3e",
+    lineHeight: "1.4",
+  },
+  cardExcerpt: {
+    fontSize: "0.87rem",
+    color: "#7a8f7e",
+    lineHeight: "1.6",
+    margin: 0,
+    flexGrow: 1,
+  },
+  cardFooter: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: "8px",
+    paddingTop: "12px",
+    borderTop: "1px solid #f0ebe0",
+  },
+  cardDate: {
+    fontSize: "0.78rem",
+    color: "#9aaa9e",
+  },
+  cardRead: {
+    fontSize: "0.82rem",
+    color: "#D18B5B",
+    fontWeight: "600",
+  },
+  loadingRow: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+    gap: "24px",
+    width: "100%",
+    maxWidth: "1100px",
+    marginBottom: "60px",
+  },
+  skeleton: {
+    height: "320px",
+    backgroundColor: "#C9D8C4",
+    borderRadius: "16px",
+    opacity: 0.5,
+  },
+  empty: {
+    textAlign: "center",
+    padding: "60px 20px",
+    marginBottom: "60px",
+  },
+  emptyText: {
+    color: "#9aaa9e",
+    fontSize: "1rem",
+  },
+  toolsSection: {
     width: "100%",
     maxWidth: "1100px",
     marginBottom: "40px",
   },
-  infoHeading: {
-    fontSize: "1.3rem",
-    fontWeight: "600",
-    color: "#2a6080",
-    marginBottom: "16px",
+  toolsHeading: {
+    fontSize: "1.4rem",
+    fontWeight: "700",
+    color: "#556B5A",
+    marginBottom: "20px",
   },
-  infoText: {
-    fontSize: "0.95rem",
-    color: "#4a4a3a",
-    lineHeight: "1.8",
-    margin: "0 0 12px 0",
-  },
-  cardRow: {
+  toolsGrid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
     gap: "20px",
-    width: "100%",
-    maxWidth: "1100px",
-    marginBottom: "50px",
   },
-  featureCard: {
+  toolCard: {
     backgroundColor: "#ffffff",
-    border: "1px solid #e8e4d8",
-    borderRadius: "14px",
-    padding: "22px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+    border: "1px solid #e0d8cc",
+    borderRadius: "16px",
+    padding: "24px",
+    textDecoration: "none",
+    color: "#556B5A",
+    display: "flex",
+    gap: "16px",
+    alignItems: "flex-start",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
   },
-  featureIcon: {
-    fontSize: "1.8rem",
-    display: "block",
-    marginBottom: "10px",
+  toolLogo: {
+    width: "48px",
+    height: "48px",
+    objectFit: "contain",
+    borderRadius: "10px",
+    flexShrink: 0,
   },
-  featureTitle: {
-    fontSize: "1rem",
-    fontWeight: "600",
-    color: "#2d2d2d",
+  toolName: {
+    fontSize: "1.05rem",
+    fontWeight: "700",
+    margin: "0 0 6px 0",
+    color: "#3a4a3e",
+  },
+  toolDesc: {
+    fontSize: "0.85rem",
+    color: "#7a8f7e",
+    lineHeight: "1.6",
     margin: "0 0 8px 0",
   },
-  featureText: {
-    fontSize: "0.85rem",
-    color: "#6a6a5a",
-    lineHeight: "1.6",
-    margin: 0,
-  },
-  usageSection: {
-    width: "100%",
-    maxWidth: "1100px",
-    marginBottom: "50px",
-  },
-  stepsRow: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-    gap: "20px",
-  },
-  step: {
-    backgroundColor: "#eaf4f8",
-    border: "1px solid #c8dfe8",
-    borderRadius: "14px",
-    padding: "20px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px",
-  },
-  stepNumber: {
-    width: "32px",
-    height: "32px",
-    borderRadius: "50%",
-    backgroundColor: "#3a7d5a",
-    color: "#fff",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: "700",
-    fontSize: "0.9rem",
-  },
-  stepText: {
-    fontSize: "0.88rem",
-    color: "#4a6070",
-    lineHeight: "1.6",
-    margin: 0,
-  },
-  citationSection: {
-    width: "100%",
-    maxWidth: "1100px",
-    marginBottom: "50px",
-  },
-  codeBlock: {
-    backgroundColor: "#f4f0e8",
-    border: "1px solid #e0dac8",
-    borderRadius: "10px",
-    padding: "20px",
-    fontSize: "0.8rem",
-    lineHeight: "1.6",
-    overflowX: "auto",
-    color: "#3a3a2a",
-    fontFamily: "monospace",
-    margin: "0 0 16px 0",
-  },
-  citationLinks: {
-    display: "flex",
-    gap: "10px",
-    flexWrap: "wrap",
-  },
-  pill: {
-    fontSize: "0.78rem",
-    backgroundColor: "#eaf4f8",
-    color: "#2a6080",
-    padding: "5px 12px",
-    borderRadius: "20px",
-    textDecoration: "none",
-    fontWeight: "500",
+  toolLink: {
+    fontSize: "0.82rem",
+    color: "#D18B5B",
+    fontWeight: "600",
   },
   footer: {
-    backgroundColor: "#ffffff",
-    borderTop: "1px solid #e8e4d8",
+    backgroundColor: "#C1E1D2",
+    borderTop: "1px solid #a8cfc0",
     padding: "24px 40px",
     textAlign: "center",
   },
@@ -444,19 +424,14 @@ const styles = {
     flexWrap: "wrap",
   },
   footerLink: {
-    color: "#3a7d5a",
+    color: "#556B5A",
     textDecoration: "none",
     fontSize: "0.88rem",
     fontWeight: "500",
   },
   footerText: {
-    color: "#9a9a8a",
+    color: "#7a8f7e",
     fontSize: "0.82rem",
     margin: 0,
-  },
-  link: {
-    color: "#3a7d5a",
-    textDecoration: "none",
-    fontWeight: "500",
   },
 }
