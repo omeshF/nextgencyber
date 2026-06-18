@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 
@@ -62,7 +63,16 @@ export default function Article() {
             <Link href="/" style={styles.backLink}>← Back to Articles</Link>
 
             {article.cover_image && (
-              <img src={article.cover_image} alt={article.title} style={styles.coverImg} />
+              <div style={styles.coverImgWrap}>
+                <Image
+                  src={article.cover_image}
+                  alt={article.title}
+                  fill
+                  priority
+                  sizes="(max-width: 780px) 100vw, 780px"
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
             )}
 
             <div style={styles.meta}>
@@ -162,11 +172,12 @@ const styles = {
     display: "inline-block",
     marginBottom: "24px",
   },
-  coverImg: {
+  coverImgWrap: {
+    position: "relative",
     width: "100%",
     height: "320px",
-    objectFit: "cover",
     borderRadius: "16px",
+    overflow: "hidden",
     marginBottom: "28px",
   },
   meta: {

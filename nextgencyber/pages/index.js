@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Script from 'next/script'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 const CATEGORIES = ['All', 'Further Education', 'Higher Education', 'Learner Engagement', 'Gamified Learning', 'AI & Education', 'AI & Cyber']
@@ -99,10 +100,17 @@ export default function Home() {
             <div style={styles.grid}>
               {filtered.map(article => (
                 <Link key={article.id} href={'/article/' + article.slug} style={styles.card}>
-                  {article.cover_image && (
-                    <img src={article.cover_image} alt={article.title} style={styles.cardImg} />
-                  )}
-                  {!article.cover_image && (
+                  {article.cover_image ? (
+                    <div style={styles.cardImgWrap}>
+                      <Image
+                        src={article.cover_image}
+                        alt={article.title}
+                        fill
+                        sizes="(max-width: 700px) 100vw, 350px"
+                        style={{ objectFit: 'cover' }}
+                      />
+                    </div>
+                  ) : (
                     <div style={styles.cardImgPlaceholder}>📝</div>
                   )}
                   <div style={styles.cardBody}>
@@ -278,10 +286,10 @@ const styles = {
     display: "flex",
     flexDirection: "column",
   },
-  cardImg: {
+  cardImgWrap: {
+    position: "relative",
     width: "100%",
     height: "180px",
-    objectFit: "cover",
   },
   cardImgPlaceholder: {
     width: "100%",
