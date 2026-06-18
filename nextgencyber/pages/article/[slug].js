@@ -63,16 +63,15 @@ export default function Article() {
             <Link href="/" style={styles.backLink}>← Back to Articles</Link>
 
             {article.cover_image && (
-              <div style={styles.coverImgWrap}>
-                <Image
-                  src={article.cover_image}
-                  alt={article.title}
-                  fill
-                  priority
-                  sizes="(max-width: 780px) 100vw, 780px"
-                  style={{ objectFit: 'cover' }}
-                />
-              </div>
+              <Image
+                src={article.cover_image}
+                alt={article.title}
+                width={0}
+                height={0}
+                priority
+                sizes="(max-width: 780px) 100vw, 780px"
+                style={styles.coverImg}
+              />
             )}
 
             <div style={styles.meta}>
@@ -172,12 +171,11 @@ const styles = {
     display: "inline-block",
     marginBottom: "24px",
   },
-  coverImgWrap: {
-    position: "relative",
+  coverImg: {
     width: "100%",
-    height: "320px",
+    height: "auto",
+    display: "block",
     borderRadius: "16px",
-    overflow: "hidden",
     marginBottom: "28px",
   },
   meta: {
