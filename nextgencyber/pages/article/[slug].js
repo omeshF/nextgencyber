@@ -2,7 +2,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Fragment } from 'react'
+import LectureDemo from '../../components/LectureDemo'
 
 export default function Article() {
   const router = useRouter()
@@ -90,11 +91,18 @@ export default function Article() {
             <h1 style={styles.title}>{article.title}</h1>
             <p style={styles.excerpt}>{article.excerpt}</p>
 
-            <div
-            className="article-content"
-            style={styles.content}
-            dangerouslySetInnerHTML={{ __html: article.content }}
-            />
+            {(article.content || '')
+              .split(/(?:<p>\s*)?\[\[lecture-demo\]\](?:\s*<\/p>)?/)
+              .map((part, i, arr) => (
+                <Fragment key={i}>
+                  <div
+                    className="article-content"
+                    style={styles.content}
+                    dangerouslySetInnerHTML={{ __html: part }}
+                  />
+                  {i < arr.length - 1 && <LectureDemo />}
+                </Fragment>
+              ))}
           </div>
         </main>
 
