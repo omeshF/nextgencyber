@@ -18,13 +18,13 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     if (!isAuthenticated(req)) return res.status(401).json({ error: 'Unauthorised' })
 
-    const { title, slug, excerpt, content, category, cover_image, published } = req.body
+    const { title, slug, excerpt, content, categories, cover_image, published } = req.body
 
     try {
       const result = await sql`
-        INSERT INTO articles (title, slug, excerpt, content, category, cover_image, published)
-        VALUES (${title}, ${slug}, ${excerpt}, ${content}, ${category}, ${cover_image}, ${published})
-        RETURNING *
+      INSERT INTO articles (title, slug, excerpt, content, categories, cover_image, published)
+      VALUES (${title}, ${slug}, ${excerpt}, ${content}, ${categories}, ${cover_image}, ${published})
+      RETURNING *
       `
       return res.status(201).json(result[0])
     } catch (error) {
