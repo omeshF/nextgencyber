@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useState, useEffect, Fragment } from 'react'
-import LectureDemo from '../../components/LectureDemo'
+import LecturePreview from '../../components/LecturePreview'
 
 export default function Article() {
   const router = useRouter()
@@ -100,7 +100,7 @@ export default function Article() {
                     style={styles.content}
                     dangerouslySetInnerHTML={{ __html: part }}
                   />
-                  {i < arr.length - 1 && <LectureDemo />}
+                  {i < arr.length - 1 && <LecturePreview />}
                 </Fragment>
               ))}
           </div>

@@ -3,6 +3,7 @@ import Script from 'next/script'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import LecturePreview from '../components/LecturePreview'
 
 const CATEGORIES = ['All', 'Further Education', 'Higher Education', 'Learner Engagement', 'Gamified Learning', 'AI & Education', 'AI & Cyber']
 
@@ -189,6 +190,8 @@ export default function Home() {
                         style={{ objectFit: 'cover' }}
                       />
                     </div>
+                  ) : (article.content || '').includes('[[lecture-demo]]') ? (
+                    <LecturePreview variant="card" />
                   ) : (
                     <CardPlaceholder index={i} />
                   )}
