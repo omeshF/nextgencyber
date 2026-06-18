@@ -32,6 +32,33 @@ const FOOTER = () => (
   </footer>
 )
 
+function CardPlaceholder({ index = 0 }) {
+  const delay = (index % 5) * 0.7
+  return (
+    <div style={styles.cardImgPlaceholder}>
+      <svg
+        className="ngc-ph"
+        viewBox="0 0 120 120"
+        width="92"
+        height="92"
+        style={{ '--ngc-delay': delay + 's', overflow: 'visible' }}
+        aria-hidden="true"
+      >
+        <circle className="ngc-ring" cx="60" cy="60" r="33" />
+        <circle className="ngc-ring ngc-ring2" cx="60" cy="60" r="33" />
+        <path
+          className="ngc-shield"
+          d="M60 24 L86 34 V60 C86 78 74 90 60 96 C46 90 34 78 34 60 V34 Z"
+        />
+        <path className="ngc-check" d="M50 60 L57 68 L72 50" />
+        <circle className="ngc-node ngc-node1" cx="26" cy="40" r="3" />
+        <circle className="ngc-node ngc-node2" cx="94" cy="46" r="3" />
+        <circle className="ngc-node ngc-node3" cx="90" cy="86" r="3" />
+      </svg>
+    </div>
+  )
+}
+
 export default function Home() {
   const [articles, setArticles] = useState([])
   const [category, setCategory] = useState('All')
@@ -54,6 +81,58 @@ export default function Home() {
         <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/trafficlens.jpg" />
+        <style>{`
+          .ngc-ring {
+            fill: none;
+            stroke: #556B5A;
+            stroke-width: 1.5;
+            opacity: 0;
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: ngcRing 3.2s ease-out infinite;
+            animation-delay: var(--ngc-delay, 0s);
+          }
+          .ngc-ring2 { animation-delay: calc(var(--ngc-delay, 0s) + 1.6s); }
+          .ngc-shield {
+            fill: #FFF7EA;
+            stroke: #556B5A;
+            stroke-width: 2.5;
+            stroke-linejoin: round;
+          }
+          .ngc-check {
+            fill: none;
+            stroke: #D18B5B;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 40;
+            stroke-dashoffset: 40;
+            animation: ngcDraw 1.1s ease-out forwards;
+            animation-delay: calc(var(--ngc-delay, 0s) + 0.3s);
+          }
+          .ngc-node {
+            fill: #D18B5B;
+            animation: ngcFloat 4s ease-in-out infinite;
+            animation-delay: var(--ngc-delay, 0s);
+          }
+          .ngc-node2 { fill: #7a8f7e; animation-delay: calc(var(--ngc-delay, 0s) + 0.9s); }
+          .ngc-node3 { animation-delay: calc(var(--ngc-delay, 0s) + 1.7s); }
+          @keyframes ngcRing {
+            0%   { transform: scale(0.8); opacity: 0.5; }
+            70%  { opacity: 0; }
+            100% { transform: scale(1.45); opacity: 0; }
+          }
+          @keyframes ngcDraw { to { stroke-dashoffset: 0; } }
+          @keyframes ngcFloat {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-6px); }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .ngc-ring, .ngc-check, .ngc-node { animation: none; }
+            .ngc-ring { opacity: 0; }
+            .ngc-check { stroke-dashoffset: 0; }
+          }
+        `}</style>
       </Head>
 
       <Script
@@ -98,7 +177,7 @@ export default function Home() {
             </div>
           ) : (
             <div style={styles.grid}>
-              {filtered.map(article => (
+              {filtered.map((article, i) => (
                 <Link key={article.id} href={'/article/' + article.slug} style={styles.card}>
                   {article.cover_image ? (
                     <div style={styles.cardImgWrap}>
@@ -111,7 +190,7 @@ export default function Home() {
                       />
                     </div>
                   ) : (
-                    <div style={styles.cardImgPlaceholder}>📝</div>
+                    <CardPlaceholder index={i} />
                   )}
                   <div style={styles.cardBody}>
                     <div style={styles.cardCategoryRow}>
@@ -294,11 +373,10 @@ const styles = {
   cardImgPlaceholder: {
     width: "100%",
     height: "180px",
-    backgroundColor: "#C9D8C4",
+    background: "linear-gradient(135deg, #C1E1D2, #C9D8C4)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: "3rem",
   },
   cardBody: {
     padding: "20px",
