@@ -19,20 +19,20 @@ export default async function handler(req, res) {
   if (req.method === 'PUT') {
     if (!isAuthenticated(req)) return res.status(401).json({ error: 'Unauthorised' })
 
-    const { title, excerpt, content, category, cover_image, published } = req.body
+    const { title, excerpt, content, categories, cover_image, published } = req.body
 
     try {
       const result = await sql`
         UPDATE articles SET
-          title = ${title},
-          excerpt = ${excerpt},
-          content = ${content},
-          category = ${category},
-          cover_image = ${cover_image},
-          published = ${published},
-          updated_at = now()
-        WHERE slug = ${slug}
-        RETURNING *
+        title = ${title},
+        excerpt = ${excerpt},
+        content = ${content},
+        categories = ${categories},
+        cover_image = ${cover_image},
+        published = ${published},
+        updated_at = now()
+      WHERE slug = ${slug}
+      RETURNING *
       `
       return res.status(200).json(result[0])
     } catch (error) {

@@ -225,7 +225,7 @@ export default function Editor() {
   const [title, setTitle] = useState('')
   const [slug, setSlug] = useState('')
   const [excerpt, setExcerpt] = useState('')
-  const [category, setCategory] = useState(CATEGORIES[0])
+  const [categories, setCategories] = useState([])
   const [coverImage, setCoverImage] = useState('')
   const [published, setPublished] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -261,7 +261,7 @@ export default function Editor() {
         setTitle(data.title)
         setSlug(data.slug)
         setExcerpt(data.excerpt || '')
-        setCategory(data.category || CATEGORIES[0])
+        setCategories(data.categories || [])
         setCoverImage(data.cover_image || '')
         setPublished(data.published)
         editor?.commands.setContent(data.content || '')
@@ -341,10 +341,10 @@ export default function Editor() {
       slug,
       excerpt,
       content,
-      category,
+      categories,
       cover_image: coverImage,
       published: publishOverride !== undefined ? publishOverride : published,
-    }
+}
 
     const res = await fetch(
       isEditing ? '/api/articles/' + editSlug : '/api/articles',
@@ -478,17 +478,24 @@ export default function Editor() {
                 <h3 style={styles.sideTitle}>Settings</h3>
 
                 <div style={styles.formGroup}>
-                  <label style={styles.label}>Category</label>
-                  <select
-                    value={category}
-                    onChange={e => setCategory(e.target.value)}
-                    style={styles.select}
-                  >
-                    {CATEGORIES.map(c => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
-                  </select>
-                </div>
+  <label style={styles.label}>Categories (select one or more)</label>
+  <div style={styles.checkboxList}>
+    {CATEGORIES.map(c => (
+      <label key={c} style={styles.checkboxRow}>
+        <input
+          type="checkbox"
+          checked={categories.includes(c)}
+          onChange={() => {
+            setCategories(prev =>
+              prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c]
+            )
+          }}
+        />
+        <span>{c}</span>
+      </label>
+    ))}
+  </div>
+</div>
 
                 <div style={styles.formGroup}>
                   <label style={styles.label}>Status</label>
@@ -967,4 +974,17 @@ const styles = {
     fontSize: "0.88rem",
     fontFamily: "'Segoe UI', system-ui, sans-serif",
   },
+  checkboxList: {
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
+},
+checkboxRow: {
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  fontSize: "0.85rem",
+  color: "#3a4a3e",
+  cursor: "pointer",
+},
 }

@@ -36,7 +36,13 @@ export default function Article() {
         <title>{article.title} — NextGenCyber</title>
         <meta name="description" content={article.excerpt} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/trafficlens.jpg" />
+        <link rel="icon" href="/trafficlens.png" />
+      <style>{`
+        .article-content table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; }
+        .article-content table td, .article-content table th { border: 1px solid #e0d8cc; padding: 10px 14px; text-align: left; }
+        .article-content table th { background-color: #C9D8C4; font-weight: 600; color: #3a4a3e; }
+        .article-content img { max-width: 100%; border-radius: 8px; margin: 1.5rem 0; }
+      `}</style>
       </Head>
 
       <div style={styles.page}>
@@ -60,7 +66,11 @@ export default function Article() {
             )}
 
             <div style={styles.meta}>
-              <span style={styles.category}>{article.category}</span>
+              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+  {(article.categories || []).map(c => (
+    <span key={c} style={styles.category}>{c}</span>
+  ))}
+</div>
               <span style={styles.date}>
                 {new Date(article.created_at).toLocaleDateString('en-GB', {
                   day: 'numeric', month: 'long', year: 'numeric'
@@ -72,8 +82,9 @@ export default function Article() {
             <p style={styles.excerpt}>{article.excerpt}</p>
 
             <div
-              style={styles.content}
-              dangerouslySetInnerHTML={{ __html: article.content }}
+            className="article-content"
+            style={styles.content}
+            dangerouslySetInnerHTML={{ __html: article.content }}
             />
           </div>
         </main>

@@ -43,7 +43,7 @@ export default function Home() {
       .catch(() => setLoading(false))
   }, [])
 
-  const filtered = category === 'All' ? articles : articles.filter(a => a.category === category)
+  const filtered = category === 'All' ? articles : articles.filter(a => a.categories && a.categories.includes(category))
 
   return (
     <>
@@ -106,7 +106,11 @@ export default function Home() {
                     <div style={styles.cardImgPlaceholder}>📝</div>
                   )}
                   <div style={styles.cardBody}>
-                    <span style={styles.cardCategory}>{article.category}</span>
+                    <div style={styles.cardCategoryRow}>
+                    {(article.categories || []).map(c => (
+                    <span key={c} style={styles.cardCategory}>{c}</span>
+                    ))}
+                  </div>
                     <h2 style={styles.cardTitle}>{article.title}</h2>
                     <p style={styles.cardExcerpt}>{article.excerpt}</p>
                     <div style={styles.cardFooter}>
@@ -434,4 +438,9 @@ const styles = {
     fontSize: "0.82rem",
     margin: 0,
   },
+  cardCategoryRow: {
+  display: "flex",
+  gap: "6px",
+  flexWrap: "wrap",
+},
 }
