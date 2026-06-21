@@ -9,7 +9,10 @@ const CATEGORIES = ['All', 'Further Education', 'Higher Education', 'Learner Eng
 
 const NAV = () => (
   <nav style={styles.nav}>
-    <Link href="/" style={styles.navBrand}>🛡️ NextGenCyber</Link>
+    <Link href="/" style={styles.navBrand}>
+      <img src="/logo.jpg" alt="NextGenCyber logo" style={styles.navLogo} />
+      NextGenCyber
+    </Link>
     <div style={styles.navLinks}>
       <Link href="/" style={styles.navLinkActive}>Articles</Link>
       <Link href="/tools" style={styles.navLink}>Tools</Link>
@@ -60,10 +63,13 @@ function CardPlaceholder({ index = 0 }) {
   )
 }
 
+const PER_PAGE = 9
+
 export default function Home() {
   const [articles, setArticles] = useState([])
   const [category, setCategory] = useState('All')
   const [loading, setLoading] = useState(true)
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     fetch('/api/articles')
@@ -74,10 +80,20 @@ export default function Home() {
 
   const filtered = category === 'All' ? articles : articles.filter(a => a.categories && a.categories.includes(category))
 
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE))
+  const currentPage = Math.min(page, totalPages)
+  const paged = filtered.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE)
+
+  const selectCategory = (cat) => { setCategory(cat); setPage(1) }
+  const goToPage = (p) => {
+    setPage(p)
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <>
       <Head>
-        <title>NextGenCyber — Education & Cybersecurity Articles</title>
+        <title>NextGenCyber — Education, AI, & Cybersecurity Articles</title>
         <meta name="description" content="Articles on further education, higher education, learner engagement, gamified learning, AI tools for education, and AI in cybersecurity." />
         <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -148,7 +164,7 @@ export default function Home() {
 
         <main style={styles.main}>
           <header style={styles.hero}>
-            <h1 style={styles.heroTitle}>Insights in Education & Cybersecurity</h1>
+            <h1 style={styles.heroTitle}>Insights in Education, AI, & Cybersecurity</h1>
             <div style={styles.divider} />
             <p style={styles.heroSubtitle}>
               Articles on further education, higher education, learner engagement,
@@ -160,7 +176,7 @@ export default function Home() {
             {CATEGORIES.map(cat => (
               <button
                 key={cat}
-                onClick={() => setCategory(cat)}
+                onClick={() => selectCategory(cat)}
                 style={category === cat ? styles.catActive : styles.catBtn}
               >
                 {cat}
@@ -177,8 +193,9 @@ export default function Home() {
               <p style={styles.emptyText}>No articles yet in this category. Check back soon!</p>
             </div>
           ) : (
+            <>
             <div style={styles.grid}>
-              {filtered.map((article, i) => (
+              {paged.map((article, i) => (
                 <Link key={article.id} href={'/article/' + article.slug} style={styles.card}>
                   {article.cover_image ? (
                     <div style={styles.cardImgWrap}>
@@ -187,7 +204,7 @@ export default function Home() {
                         alt={article.title}
                         fill
                         sizes="(max-width: 700px) 100vw, 350px"
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: 'cover', objectPosition: 'top' }}
                       />
                     </div>
                   ) : (article.content || '').includes('[[lecture-demo]]') ? (
@@ -213,6 +230,36 @@ export default function Home() {
                 </Link>
               ))}
             </div>
+
+            {totalPages > 1 && (
+              <nav style={styles.pagination} aria-label="Article pages">
+                <button
+                  onClick={() => goToPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  style={currentPage === 1 ? styles.pageNavDisabled : styles.pageNav}
+                >
+                  ← Newer
+                </button>
+                {Array.from({ length: totalPages }, (_, idx) => idx + 1).map(p => (
+                  <button
+                    key={p}
+                    onClick={() => goToPage(p)}
+                    style={p === currentPage ? styles.pageNumActive : styles.pageNum}
+                    aria-current={p === currentPage ? 'page' : undefined}
+                  >
+                    {p}
+                  </button>
+                ))}
+                <button
+                  onClick={() => goToPage(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  style={currentPage === totalPages ? styles.pageNavDisabled : styles.pageNav}
+                >
+                  Older →
+                </button>
+              </nav>
+            )}
+            </>
           )}
 
           {/* Tools section */}
@@ -270,6 +317,15 @@ const styles = {
     fontWeight: "700",
     color: "#556B5A",
     textDecoration: "none",
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+  },
+  navLogo: {
+    width: "32px",
+    height: "32px",
+    objectFit: "cover",
+    borderRadius: "8px",
   },
   navLinks: { display: "flex", gap: "28px", flexWrap: "wrap" },
   navLink: {
@@ -532,4 +588,59 @@ const styles = {
   gap: "6px",
   flexWrap: "wrap",
 },
+  pagination: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "8px",
+    flexWrap: "wrap",
+    marginTop: "-40px",
+    marginBottom: "60px",
+  },
+  pageNav: {
+    backgroundColor: "#C9D8C4",
+    color: "#556B5A",
+    border: "none",
+    padding: "8px 16px",
+    borderRadius: "20px",
+    fontSize: "0.85rem",
+    fontWeight: "600",
+    cursor: "pointer",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+  },
+  pageNavDisabled: {
+    backgroundColor: "#e8eee5",
+    color: "#b3c0b3",
+    border: "none",
+    padding: "8px 16px",
+    borderRadius: "20px",
+    fontSize: "0.85rem",
+    fontWeight: "600",
+    cursor: "not-allowed",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+  },
+  pageNum: {
+    backgroundColor: "#ffffff",
+    color: "#556B5A",
+    border: "1px solid #e0d8cc",
+    minWidth: "38px",
+    padding: "8px 12px",
+    borderRadius: "20px",
+    fontSize: "0.85rem",
+    fontWeight: "600",
+    cursor: "pointer",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+  },
+  pageNumActive: {
+    backgroundColor: "#556B5A",
+    color: "#FFF7EA",
+    border: "1px solid #556B5A",
+    minWidth: "38px",
+    padding: "8px 12px",
+    borderRadius: "20px",
+    fontSize: "0.85rem",
+    fontWeight: "700",
+    cursor: "pointer",
+    fontFamily: "'Segoe UI', system-ui, sans-serif",
+  },
 }
