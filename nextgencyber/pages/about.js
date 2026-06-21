@@ -27,7 +27,8 @@ export default function About() {
             NextGenCyber
           </Link>
           <div style={styles.navLinks}>
-            <Link href="/" style={styles.navLink}>TrafficLens</Link>
+            <Link href="/" style={styles.navLink}>Articles</Link>
+            <Link href="/tools" style={styles.navLink}>Tools</Link>
             <a href="https://learningpark.nextgencyber.co.uk" style={styles.navLink}>LearningPark</a>
             <Link href="/about" style={styles.navLinkActive}>About</Link>
             <Link href="/contact" style={styles.navLink}>Contact</Link>
