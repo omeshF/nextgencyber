@@ -35,6 +35,9 @@ export default function Article() {
   return (
     <>
       <Head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3806712449234414"
+     crossorigin="anonymous"></script>
+     <meta name="google-adsense-account" content="ca-pub-3806712449234414"></meta>
         <title>{article.title} — NextGenCyber</title>
         <meta name="description" content={article.excerpt} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

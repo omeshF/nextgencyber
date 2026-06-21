@@ -42,6 +42,9 @@ export default function Contact() {
         <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/logo.jpg" />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3806712449234414"
+     crossorigin="anonymous"></script>
+     <meta name="google-adsense-account" content="ca-pub-3806712449234414"></meta>
       </Head>
 
       <Script

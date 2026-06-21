@@ -29,6 +29,8 @@ export default function AdminDashboard() {
   return (
     <>
       <Head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3806712449234414"
+     crossorigin="anonymous"></script>
         <title>Admin Dashboard — NextGenCyber</title>
         <link rel="icon" href="/trafficlens.jpg" />
       </Head>

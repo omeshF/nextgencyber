@@ -371,6 +371,8 @@ export default function Editor() {
   return (
     <>
       <Head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3806712449234414"
+     crossorigin="anonymous"></script>
         <title>{isEditing ? 'Edit Article' : 'New Article'} -- NextGenCyber Admin</title>
         <link rel="icon" href="/trafficlens.png" />
         <style>{`

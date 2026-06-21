@@ -27,6 +27,8 @@ export default function AdminLogin() {
   return (
     <>
       <Head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3806712449234414"
+     crossorigin="anonymous"></script>
         <title>Admin Login — NextGenCyber</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/trafficlens.jpg" />

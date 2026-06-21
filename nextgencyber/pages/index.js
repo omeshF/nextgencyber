@@ -93,6 +93,9 @@ export default function Home() {
   return (
     <>
       <Head>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3806712449234414"
+     crossorigin="anonymous"></script>
+     <meta name="google-adsense-account" content="ca-pub-3806712449234414"></meta>
         <title>NextGenCyber — Education, AI, & Cybersecurity Articles</title>
         <meta name="description" content="Articles on further education, higher education, learner engagement, gamified learning, AI tools for education, and AI in cybersecurity." />
         <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
