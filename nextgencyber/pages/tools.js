@@ -10,7 +10,7 @@ export default function Tools() {
         <meta name="description" content="Convert network traffic CSV to CNN-ready images for anomaly detection." />
         <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/trafficlens.jpg" />
+        <link rel="icon" href="/logo.jpg" />
       </Head>
 
       <Script
@@ -28,7 +28,10 @@ export default function Tools() {
 
       <div style={styles.page}>
         <nav style={styles.nav}>
-          <Link href="/" style={styles.navBrand}>🛡️ NextGenCyber</Link>
+          <Link href="/" style={styles.navBrand}>
+            <img src="/logo.jpg" alt="NextGenCyber logo" style={styles.navLogo} />
+            NextGenCyber
+          </Link>
           <div style={styles.navLinks}>
             <Link href="/" style={styles.navLink}>Articles</Link>
             <Link href="/tools" style={styles.navLinkActive}>Tools</Link>
@@ -97,7 +100,11 @@ const styles = {
     gap: "12px",
     boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
   },
-  navBrand: { fontSize: "1.2rem", fontWeight: "700", color: "#556B5A", textDecoration: "none" },
+  navBrand: {
+    fontSize: "1.2rem", fontWeight: "700", color: "#556B5A", textDecoration: "none",
+    display: "flex", alignItems: "center", gap: "10px",
+  },
+  navLogo: { width: "32px", height: "32px", objectFit: "cover", borderRadius: "8px" },
   navLinks: { display: "flex", gap: "28px", flexWrap: "wrap" },
   navLink: { color: "#556B5A", textDecoration: "none", fontSize: "0.95rem", fontWeight: "500" },
   navLinkActive: {

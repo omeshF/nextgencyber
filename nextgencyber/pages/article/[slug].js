@@ -38,7 +38,7 @@ export default function Article() {
         <title>{article.title} — NextGenCyber</title>
         <meta name="description" content={article.excerpt} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/trafficlens.png" />
+        <link rel="icon" href="/logo.jpg" />
       <style>{`
         .article-content table { border-collapse: collapse; width: 100%; margin: 1.5rem 0; }
         .article-content table td, .article-content table th { border: 1px solid #e0d8cc; padding: 10px 14px; text-align: left; }
@@ -49,7 +49,10 @@ export default function Article() {
 
       <div style={styles.page}>
         <nav style={styles.nav}>
-          <Link href="/" style={styles.navBrand}>🛡️ NextGenCyber</Link>
+          <Link href="/" style={styles.navBrand}>
+            <img src="/logo.jpg" alt="NextGenCyber logo" style={styles.navLogo} />
+            NextGenCyber
+          </Link>
           <div style={styles.navLinks}>
             <Link href="/" style={styles.navLink}>Articles</Link>
             <Link href="/tools" style={styles.navLink}>Tools</Link>
@@ -153,6 +156,15 @@ const styles = {
     fontWeight: "700",
     color: "#556B5A",
     textDecoration: "none",
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+  },
+  navLogo: {
+    width: "32px",
+    height: "32px",
+    objectFit: "cover",
+    borderRadius: "8px",
   },
   navLinks: { display: "flex", gap: "28px", flexWrap: "wrap" },
   navLink: {

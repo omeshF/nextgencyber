@@ -41,7 +41,7 @@ export default function Contact() {
         <meta name="description" content="Get in touch with NextGenCyber — report issues, ask questions, or collaborate on cybersecurity and ML research." />
         <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/trafficlens.jpg" />
+        <link rel="icon" href="/logo.jpg" />
       </Head>
 
       <Script
@@ -53,7 +53,10 @@ export default function Contact() {
 
       <div style={styles.page}>
         <nav style={styles.nav}>
-          <Link href="/" style={styles.navBrand}>🛡️ NextGenCyber</Link>
+          <Link href="/" style={styles.navBrand}>
+            <img src="/logo.jpg" alt="NextGenCyber logo" style={styles.navLogo} />
+            NextGenCyber
+          </Link>
           <div style={styles.navLinks}>
             <Link href="/" style={styles.navLink}>TrafficLens</Link>
             <a href="https://learningpark.nextgencyber.co.uk" style={styles.navLink}>LearningPark</a>
@@ -229,6 +232,15 @@ const styles = {
     fontWeight: "700",
     color: "#3a7d5a",
     textDecoration: "none",
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+  },
+  navLogo: {
+    width: "32px",
+    height: "32px",
+    objectFit: "cover",
+    borderRadius: "8px",
   },
   navLinks: { display: "flex", gap: "28px" },
   navLink: {

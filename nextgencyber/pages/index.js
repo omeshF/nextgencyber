@@ -97,7 +97,7 @@ export default function Home() {
         <meta name="description" content="Articles on further education, higher education, learner engagement, gamified learning, AI tools for education, and AI in cybersecurity." />
         <meta name="google-adsense-account" content="ca-pub-3806712449234414" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/trafficlens.jpg" />
+        <link rel="icon" href="/logo.jpg" />
         <style>{`
           .ngc-ring {
             fill: none;
