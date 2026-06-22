@@ -23,12 +23,6 @@ export default function Tools() {
         strategy="afterInteractive"
       />
 
-      <Script
-        type="module"
-        src="https://gradio.s3-us-west-2.amazonaws.com/6.14.0/gradio.js"
-        strategy="afterInteractive"
-      />
-
       <div style={styles.page}>
         <nav style={styles.nav}>
           <Link href="/" style={styles.navBrand}>
@@ -66,7 +60,12 @@ export default function Tools() {
           </header>
 
           <div style={styles.appWrapper}>
-            <gradio-app src="https://omeshf91-trafficlens.hf.space" />
+            <iframe
+              src="https://omeshf91-trafficlens.hf.space"
+              title="TrafficLens"
+              style={styles.appFrame}
+              allow="clipboard-read; clipboard-write"
+            />
           </div>
         </main>
 
@@ -131,6 +130,9 @@ const styles = {
   appWrapper: {
     width: "100%", maxWidth: "1100px", borderRadius: "16px", overflow: "hidden",
     border: "1px solid #e0d8cc", boxShadow: "0 2px 12px rgba(0,0,0,0.06)", marginBottom: "50px",
+  },
+  appFrame: {
+    width: "100%", height: "900px", border: "none", display: "block",
   },
   link: { color: "#D18B5B", textDecoration: "none", fontWeight: "500" },
   footer: { backgroundColor: "#C1E1D2", borderTop: "1px solid #a8cfc0", padding: "24px 40px", textAlign: "center" },
